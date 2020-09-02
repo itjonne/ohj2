@@ -35,8 +35,9 @@ public class Jasenet {
     /**
      * Testipääohjelma
      * @param args ei käytössä
+     * @throws ExceptionHandler Virheiden hallinta
      */
-    public static void main(String args[]) {
+    public static void main(String args[]) throws ExceptionHandler  {
         Jasenet jasenet = new Jasenet();
         Jasen aku = new Jasen(), aku2 = new Jasen();
         aku.setEtunimi("Aku");
@@ -46,7 +47,12 @@ public class Jasenet {
         jasenet.lisaa(aku);
         jasenet.lisaa(aku2);
         
-        System.out.println(jasenet.alkiot[0].getKokonimi());
-        System.out.println(jasenet.alkiot[1].getKokonimi());
+        try {            
+            System.out.println(jasenet.alkiot[0].getKokonimi());
+            System.out.println(jasenet.alkiot[1].getKokonimi());
+            System.out.println(jasenet.alkiot[2].getKokonimi());
+        } catch (Exception e) {
+            throw new ExceptionHandler(e.getMessage());
+        }
     }
 }
