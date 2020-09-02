@@ -1,7 +1,107 @@
 <?xml version="1.0" encoding="UTF-8"?>
-	
+
+<?import fi.jyu.mit.fxgui.ListChooser?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.BorderPane?>
-	
-<BorderPane xmlns:fx="http://javafx.com/fxml/1" fx:controller="fxBongari.BongariGUIController">
-	<!-- TODO Add Nodes -->
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+
+<BorderPane xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fxBongari.BongariGUIController">
+   <top>
+      <MenuBar BorderPane.alignment="CENTER">
+        <menus>
+          <Menu mnemonicParsing="false" text="_Tiedosto">
+            <items>
+              <MenuItem mnemonicParsing="false" text="Close" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="_Muokkaa">
+            <items>
+              <MenuItem mnemonicParsing="false" text="Delete" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="_Apua">
+            <items>
+              <MenuItem mnemonicParsing="false" text="About" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+   </top>
+   <left>
+      <BorderPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <top>
+            <Label text="Jäsenet" BorderPane.alignment="CENTER" />
+         </top>
+         <center>
+            <ListChooser BorderPane.alignment="CENTER" />
+         </center>
+         <bottom>
+            <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+               <children>
+                  <Button mnemonicParsing="false" onAction="#handleUusiJasen" text="Uusi Jäsen" />
+                  <Button mnemonicParsing="false" onAction="#handleTallenna" text="Tallenna" />
+               </children>
+            </HBox>
+         </bottom>
+      </BorderPane>
+   </left>
+   <center>
+      <BorderPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <top>
+            <Label text="Bongaukset" BorderPane.alignment="CENTER" />
+         </top>
+         <center>
+            <ListChooser BorderPane.alignment="CENTER" />
+         </center>
+         <bottom>
+            <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+               <children>
+                  <Button mnemonicParsing="false" onAction="#handleUusiBongaus" text="Uusi Bongaus" />
+                  <Button mnemonicParsing="false" onAction="#handlePoistaBongaus" text="Poista Bongaus" />
+               </children>
+            </HBox>
+         </bottom>
+      </BorderPane>
+   </center>
+   <right>
+      <ScrollPane fitToWidth="true" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <content>
+            <GridPane>
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <Label text="Nimi" />
+                  <Label text="Tieteellinen nimi" GridPane.rowIndex="1" />
+                  <Label text="Suku" GridPane.rowIndex="2" />
+                  <Label text="Nisäkäsjne." GridPane.rowIndex="3" />
+                  <TextField GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" />
+                  <TextField GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" />
+                  <TextField GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" />
+                  <TextField GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3" />
+                  <Label text="Tietoja" GridPane.rowIndex="4" />
+                  <TextArea prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="4" GridPane.vgrow="ALWAYS" />
+               </children>
+            </GridPane>
+         </content>
+      </ScrollPane>
+   </right>
 </BorderPane>
