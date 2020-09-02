@@ -12,7 +12,7 @@ import javafx.fxml.FXMLLoader;
  * @version 2 Sep 2020
  *
  */
-public class Main extends Application {
+public class BongariMain extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		try {
