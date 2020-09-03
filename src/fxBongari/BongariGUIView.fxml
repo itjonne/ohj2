@@ -61,7 +61,7 @@
             <Label text="Bongaukset" BorderPane.alignment="CENTER" />
          </top>
          <center>
-            <ListChooser BorderPane.alignment="CENTER" />
+            <ListChooser fx:id="bongauksetLista" BorderPane.alignment="CENTER" />
          </center>
          <bottom>
             <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">

@@ -4,9 +4,13 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import fi.jyu.mit.fxgui.Dialogs;
+import fi.jyu.mit.fxgui.ListChooser;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+
+import bongari.Bongattava;
+import bongari.Kerho;
 
 /**
  * @author Jonne
@@ -14,7 +18,12 @@ import javafx.fxml.Initializable;
  *
  */
 public class BongariGUIController implements Initializable {
+    @FXML private ListChooser<Bongattava> bongauksetLista;
 
+    @Override
+    public void initialize(URL url, ResourceBundle bundle) {
+        alusta();      
+    }
     /**
      * Käsitellään uuden jäsenen lisääminen
      */
@@ -66,10 +75,23 @@ public class BongariGUIController implements Initializable {
     private void tallenna() {
         Dialogs.showMessageDialog("Tallennetetaan! Mutta ei toimi vielä");
     }
-
-    @Override
-    public void initialize(URL arg0, ResourceBundle arg1) {
-        // TODO Auto-generated method stub
+    
+  //===========================================================================================    
+  // Tästä eteenpäin ei käyttöliittymään suoraan liittyvää koodia
+    
+    private Kerho kerho;
+    
+    private void alusta() {
+        Bongattava kala = new Bongattava();
+        kala.setId(1);
+        kala.setNimi("kala");
+        Bongattava kissa = new Bongattava();
+        kissa.setId(2);
+        kissa.setNimi("kissa");
+        
+        bongauksetLista.clear();
+        bongauksetLista.add(kala.getNimi(), kala);
+        bongauksetLista.add(kissa.getNimi(), kissa);
         
     }
 }
