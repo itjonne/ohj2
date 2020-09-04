@@ -1,5 +1,7 @@
 package bongari;
 
+import fi.jyu.mit.ohj2.Mjonot;
+
 /**
  * @author Jonne
  * @version 2 Sep 2020
@@ -99,7 +101,27 @@ public class Jasen {
     }
     
     /**
+     * Jäsen parsii omat tietonsa luettavasta rivistä
+     * @param rivi rivi josta jäsen lukee tietonsa
+     * @throws ExceptionHandler jos jotain menee pieleen, heitetään tämä
+     */
+    public void parse(String rivi) throws ExceptionHandler {
+        try {
+            StringBuffer sb = new StringBuffer(rivi);
+            
+            String olio_id = Mjonot.erota(sb,'|');
+            this.setJasenId(Integer.parseInt(olio_id));
+            String olio_etunimi = Mjonot.erota(sb,'|');
+            this.setEtunimi(olio_etunimi);
+            this.setSukunimi(sb.toString());
+            } catch (Exception ex) {
+                throw new ExceptionHandler("Tietojen hakemisessa meni joku rikki " + ex.getMessage());
+            }
+    }
+    
+    /**
      * Asettaa jäsenelle id:n ilman erillistä rekisteröintiä.
+     * Samalla varmistaa, että seuraavaNro on tarpeeksi suuri seuraavaa rekisteröintiä varten.
      * @param id annettava id-numero
      * @example
      * <pre name="test">
@@ -110,6 +132,7 @@ public class Jasen {
      */
     public void setJasenId(int id) {
         this.jasenId = id;
+        if (this.jasenId >= seuraavaNro) seuraavaNro = this.jasenId + 1;
     }
     
     /**

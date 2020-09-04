@@ -16,28 +16,37 @@ public class Kerho {
      * Asettaa tiedostojen perusnimet
      * @param nimi uusi nimi
      */
-    public void setTiedosto(String nimi) {
+    public void setTiedostot(String nimi) {
         File dir = new File(nimi);
         dir.mkdirs();
         String hakemistonNimi = "";
         if ( !nimi.isEmpty() ) hakemistonNimi = nimi +"/";
         bongattavat.setTiedostonPerusNimi(hakemistonNimi + "linnut");
+        jasenet.setTiedostonPerusNimi(hakemistonNimi + "jasenet");
     }
     
     /**
      * @param nimi luettavan tiedoston nimi
      * @throws ExceptionHandler heitettävä exception
      */
-    public void lueTiedostosta(String nimi) throws ExceptionHandler {
-        setTiedosto(nimi);
+    public void lueKansiosta(String nimi) throws ExceptionHandler {
+        setTiedostot(nimi);
         bongattavat.lueTiedostosta();
+        jasenet.lueTiedostosta();
     }
     
     /**
-     * Tulostaa bongattavat.otukset
+     * Tulostaa bongattavat otukset
      */
     public void tulostaBongattavat() {
         bongattavat.tulostaBongattavat();
+    }
+    
+    /**
+     * Tulostaa jäsenet
+     */
+    public void tulostaJasenet() {
+        jasenet.tulostaJasenet();
     }
     
     /**
@@ -48,8 +57,10 @@ public class Kerho {
     public static void main(String args[]) throws ExceptionHandler {
         Kerho kerho = new Kerho();
         try {
-            kerho.lueTiedostosta("data");
+            kerho.lueKansiosta("data");
             kerho.tulostaBongattavat();
+            System.out.println("===== JÄSENET =====");
+            kerho.tulostaJasenet();
         } catch (Exception ex) {
             throw new ExceptionHandler(ex.getMessage());
         }

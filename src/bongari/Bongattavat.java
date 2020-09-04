@@ -14,7 +14,7 @@ import java.util.HashMap;
  */
 public class Bongattavat {
     private HashMap<String, Bongattava> alkiot = new HashMap<String, Bongattava>();
-    private String tiedostonPerusNimi = "";
+    private String tiedostonPerusNimi = "linnut";
     private int lkm = 0;
     private boolean muutettu = false;
     
