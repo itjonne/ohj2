@@ -29,8 +29,6 @@ public class Kerho {
      * @throws ExceptionHandler heitettävä exception
      */
     public void lueTiedostosta(String nimi) throws ExceptionHandler {
-        bongattavat = new Bongattavat();
-
         setTiedosto(nimi);
         bongattavat.lueTiedostosta();
     }
