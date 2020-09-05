@@ -1,0 +1,6 @@
+;Luontobongaajien kerho ry
+; Kenttien jĂ¤rjestys tiedostossa on seuraava:
+;jasenId|bongattavaId|kaupunki|pvm|tietoja
+1|1|Jyväskylä|01/01/2020|Helppo löytö
+1|2|Helsinki|02/01/2020|Hieno lintu
+2|2|Tampere|03/01/2020|Aku Ankan ensimmäinen löytö

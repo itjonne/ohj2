@@ -83,10 +83,10 @@ public class BongariGUIController implements Initializable {
     
     private void alusta() {
         Bongattava kala = new Bongattava();
-        kala.setId(1);
+        kala.setBongattavaId(1);
         kala.setNimi("kala");
         Bongattava kissa = new Bongattava();
-        kissa.setId(2);
+        kissa.setBongattavaId(2);
         kissa.setNimi("kissa");
         
         bongauksetLista.clear();

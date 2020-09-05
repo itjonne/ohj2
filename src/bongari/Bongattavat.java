@@ -13,7 +13,7 @@ import java.util.HashMap;
  *
  */
 public class Bongattavat {
-    private HashMap<String, Bongattava> alkiot = new HashMap<String, Bongattava>();
+    private HashMap<Integer, Bongattava> alkiot = new HashMap<Integer, Bongattava>();
     private String tiedostonPerusNimi = "linnut";
     private int lkm = 0;
     private boolean muutettu = false;
@@ -29,7 +29,7 @@ public class Bongattavat {
     /**
      * @return alkiot
      */
-    public HashMap<String, Bongattava> getAlkiot() {
+    public HashMap<Integer, Bongattava> getAlkiot() {
         return this.alkiot;
     }
     
@@ -38,16 +38,16 @@ public class Bongattavat {
      * @param bongattava lisättävä bongattava-olio
      */
     public void lisaa(Bongattava bongattava) {      
-        alkiot.put(bongattava.getNimi(), bongattava);
+        alkiot.put(bongattava.getBongattavaId(), bongattava);
         lkm++;
     }
     
     /**
-     * @param nimi haettavan olion nimi
-     * @return palauttaa nimellä haettavan olion
+     * @param id haettavan olion id
+     * @return palauttaa id:llä haettavan olion
      */
-    public Bongattava anna(String nimi) {
-        return alkiot.get(nimi);
+    public Bongattava anna(int id) {
+        return alkiot.get(id);
     }
     
     /**
@@ -122,8 +122,8 @@ public class Bongattavat {
      * Tulostaa kaikki tietorakenteessa olevat avaimet ( == nimet)
      */
     public void tulostaBongattavat() {
-        for (String key : alkiot.keySet()) {
-            System.out.println(key);
+        for (Integer key : alkiot.keySet()) {
+            System.out.println(alkiot.get(key).getNimi());
         }
     }
     
@@ -135,10 +135,10 @@ public class Bongattavat {
     public static void main(String args[]) throws ExceptionHandler  {
         Bongattavat bongattavat = new Bongattavat();
         Bongattava lintu = new Bongattava();
-        lintu.setId(1);
+        lintu.setBongattavaId(1);
         lintu.setNimi("Lintu");
         Bongattava kissa = new Bongattava();
-        kissa.setId(2);
+        kissa.setBongattavaId(2);
         kissa.setNimi("Kissa");
         
         try {
@@ -146,7 +146,7 @@ public class Bongattavat {
             bongattavat.lisaa(kissa);
             // TODO: Kuinka iteroidaan ns. virallisesti? Saako tehdä aliohjelman
             // getAlkiot() ja rullata sitä? Miksi pitää tehdä iteraattoreita?!
-            for (String key : bongattavat.getAlkiot().keySet()) {
+            for (Integer key : bongattavat.getAlkiot().keySet()) {
                 System.out.println(key);
             }
             

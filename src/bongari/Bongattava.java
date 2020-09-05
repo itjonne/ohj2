@@ -12,6 +12,7 @@ import fi.jyu.mit.ohj2.Mjonot;
  */
 public class Bongattava {
     private int bongattavaId = 0;
+    private static int seuraavaNro = 1;
     private String nimi = "";
     private String tieteellinen_nimi = "";
     private String heimo = "";
@@ -35,10 +36,23 @@ public class Bongattava {
     
     /**
      * Bongattavan olion id
+     * Samalla kasvattaa attribuuttia seuraavaNro rekisteröintiä varten
      * @param id annettava id-numero
      */
-    public void setId(int id) {
+    public void setBongattavaId(int id) {
         this.bongattavaId = id;
+        if (this.bongattavaId >= seuraavaNro) seuraavaNro = this.bongattavaId + 1;
+    }
+    
+    /**
+     * Rekisteröi uuden bongattavan-otuksen tietorakenteeseen.
+     * @return palauttaa luodun bongattava-olion id-numeron
+     * 
+     */
+    public int rekisteroi() {
+        this.bongattavaId = seuraavaNro;
+        seuraavaNro++;
+        return this.bongattavaId;
     }
     
     /**
@@ -102,7 +116,7 @@ public class Bongattava {
         StringBuffer sb = new StringBuffer(rivi);
         
         String olio_id = Mjonot.erota(sb,'|');
-        this.setId(Integer.parseInt(olio_id));
+        this.setBongattavaId(Integer.parseInt(olio_id));
         String olio_nimi = Mjonot.erota(sb,'|');
         this.setNimi(olio_nimi);
         String olio_tieteellinen_nimi = Mjonot.erota(sb, '|');
@@ -121,7 +135,7 @@ public class Bongattava {
      */
     public static void main(String args[]) {
         Bongattava olio = new Bongattava();
-        olio.setId(1);
+        olio.setBongattavaId(1);
         olio.setNimi("Käki");
         olio.setTieteellinenNimi("KäkiLatinaksi");
         olio.setHeimo("Käet");
