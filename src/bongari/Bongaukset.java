@@ -40,7 +40,7 @@ public class Bongaukset extends TiedostostaLuettava {
      * @param bongattavaId bongattavan olion id jonka löytäjiä etsitään
      * @return bongaukset, joissa on löydetty haettavalla id:llä valittava olio
      */
-    public List<Bongaus> haeBongauksenLoytaneetJasenet(int bongattavaId) {
+    public List<Bongaus> haeBongattavanBongaukset(int bongattavaId) {
         List<Bongaus> bongauksenLoytaneetJasenet = new ArrayList<Bongaus>();
         for (Bongaus bongaus : alkiot) {
             if ( bongaus.getBongattavaId() == bongattavaId ) bongauksenLoytaneetJasenet.add(bongaus);

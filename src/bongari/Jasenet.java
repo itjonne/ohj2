@@ -81,6 +81,18 @@ public class Jasenet {
     }
     
     /**
+     * Hakee tietorakenteesta haettavalla id:llä varustetun jäsenen.
+     * @param jasenId haettavan jäsenen id
+     * @return palauttaa löydetin jäsenen, jos ei löydy niin null.
+     */
+    public Jasen annaId(int jasenId) {
+        for (Jasen jasen : alkiot) {
+            if (jasen.getJasenId() == jasenId) return jasen;
+        }
+        return null;
+    }
+    
+    /**
      * @param tied tiedoston nimi
      * @throws ExceptionHandler jos joku menee pieleen, heitetään oma exceptioni
      */
