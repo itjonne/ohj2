@@ -10,6 +10,7 @@ import java.util.List;
  *
  */
 public class Kerho {
+    // Bongattavat tehty omalla luokkarakenteella.
     private Bongattavat bongattavat = new Bongattavat();
     private Jasenet jasenet = new Jasenet();
     private Bongaukset bongaukset = new Bongaukset();
@@ -174,6 +175,16 @@ public class Kerho {
     }
     
     /**
+     * Poistaa jäsenen tietorakenteesta.
+     * @param jasen poistettava jäsen
+     * @return true jos poistaminen onnistui, false jos ei
+     */
+    public boolean poista(Jasen jasen) {
+        boolean onnistuko = jasenet.poista(jasen.getJasenId());
+        return onnistuko;
+    }
+    
+    /**
      * Testipääohjelma
      * @param args ei käytössä
      * @throws ExceptionHandler heitettävä exception
@@ -182,6 +193,9 @@ public class Kerho {
         Kerho kerho = new Kerho();
         try {
             kerho.lueKansiosta("data");
+            List<Jasen> jasenet = kerho.jasenet.annaJasenet();
+            Jasen jasen = jasenet.get(0);
+            kerho.poista(jasen);
             kerho.tulostaBongattavat();
             System.out.println("===== JÄSENET =====");
             kerho.tulostaJasenet();

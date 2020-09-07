@@ -12,13 +12,42 @@ import fi.jyu.mit.ohj2.Mjonot;
  *
  */
 public class Bongaus {
+    private int bongausId;
     private int jasenId;
     private int bongattavaId;
+    private static int seuraavaNro = 1;
     private String kaupunki = "";
     private String pvm = ""; // Ehkä tulevaisuudessa date
     private String tietoja = "";
     
+    
     /**
+     * Palauttaa bongauksen id:n
+     * @return bongauksen id
+     */
+    public int getBongausId() {
+        return this.bongausId;
+    }
+    
+    /**
+     * Asettaa bongaukselle id:n, samalla kasvattaa seuraavaNroa rekisteröintiä varten.
+     * @param bongausId bongauksen id
+     */
+    public void setBoingausId(int bongausId) {
+        this.bongausId = bongausId;
+        if (seuraavaNro <= this.bongausId) seuraavaNro = this.bongausId + 1;
+    }
+    
+    /**
+     * Rekisteröi ja lisää bongauksen tietorakenteeseen
+     * @return rekisteröidyn bongauksen id:n
+     */
+    public int rekisteroi() {
+        this.bongausId = seuraavaNro;
+        seuraavaNro++;
+        return this.bongausId;
+    }
+     /**
      * Palauttaa bongauksen tehneen jäsenen id-numeron
      * @return bongauksen tehneen jäsenen id
      */
@@ -82,7 +111,8 @@ public class Bongaus {
     public void parse(String rivi) throws ExceptionHandler {
         try {
         StringBuffer sb = new StringBuffer(rivi);
-        
+        String olio_bongausId = Mjonot.erota(sb, '|');
+        this.setBoingausId(Integer.parseInt(olio_bongausId));
         String olio_jasenId = Mjonot.erota(sb,'|');
         this.setJasenId(Integer.parseInt(olio_jasenId));
         String olio_bongattavaId = Mjonot.erota(sb,'|');
@@ -102,7 +132,7 @@ public class Bongaus {
      * @param out tietovirta johon tulostetaan
      */
     public void tulosta(PrintStream out) {
-        out.println(this.jasenId + " " + this.bongattavaId + " " + this.kaupunki + " " + this.pvm + " " + this.tietoja);
+        out.println(this.bongausId + ": " + this.jasenId + " " + this.bongattavaId + " " + this.kaupunki + " " + this.pvm + " " + this.tietoja);
     }
 
 

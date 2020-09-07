@@ -1,6 +1,7 @@
 package bongari;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import kanta.TiedostostaLuettava;
@@ -19,6 +20,31 @@ public class Bongaukset extends TiedostostaLuettava {
      */
     public void lisaa(Bongaus bongaus) {
         this.alkiot.add(bongaus);
+    }
+    
+    /**
+     * TODO: Voiko iteraattori hajota?!?!
+     * Poistaa bongauksen id-numeron perusteella
+     * @param bongausId poistettavan bongauksen id
+     */
+    public void poista(int bongausId) {
+        Iterator<Bongaus> itr = alkiot.iterator();
+        while (itr.hasNext()) {
+            Bongaus bongaus = itr.next();
+            if ( bongaus.getBongausId() == bongausId) itr.remove();
+        }
+    }
+    
+    /**
+     * Muokkaa tietorakenteesta löytyvää bongaus-tapahtumaa
+     * @param bongaus bongaus, jonka tietoja muokataan
+     */
+    public void muokkaa(Bongaus bongaus) {
+        for (int i = 0; i < alkiot.size(); i++) {
+            if (alkiot.get(i).getBongausId() == bongaus.getBongausId()) {
+                alkiot.set(i, bongaus);
+            }
+        }
     }
     
     /**

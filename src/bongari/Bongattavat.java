@@ -4,8 +4,10 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * @author Jonne
@@ -40,6 +42,19 @@ public class Bongattavat {
     public void lisaa(Bongattava bongattava) {      
         alkiot.put(bongattava.getBongattavaId(), bongattava);
         lkm++;
+    }
+    
+    /**
+     * Etsii tietorakenteesta merkkijonon nimi-ehdon täyttävät otukset
+     * @param hakuehto merkkijono, jolla haetaan
+     * @return palauttaa nimi-hakuehdon täyttävät bongattavat otukset
+     */
+    public List<Bongattava> etsi(String hakuehto) {
+        List<Bongattava> loydetyt = new ArrayList<Bongattava>();
+        alkiot.forEach((key,value) -> {
+            if (value.getNimi().contains(hakuehto)) loydetyt.add(value);
+        });
+        return loydetyt;
     }
     
     /**

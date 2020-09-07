@@ -3,6 +3,8 @@ package bongari;
 import fi.jyu.mit.ohj2.Mjonot;
 
 /**
+ * Bongarikerhon jäsen
+ * 
  * @author Jonne
  * @version 2 Sep 2020
  *
@@ -104,6 +106,14 @@ public class Jasen {
      * Jäsen parsii omat tietonsa luettavasta rivistä
      * @param rivi rivi josta jäsen lukee tietonsa
      * @throws ExceptionHandler jos jotain menee pieleen, heitetään tämä
+     * @example
+     * <pre name="test">
+     * #THROWS ExceptionHandler
+     * Jasen jasen = new Jasen();
+     * jasen.parse("1|Aku|Ankka");
+     * jasen.getEtunimi() === "Aku";
+     * jasen.getSukunimi() === "Ankka";
+     * </pre>
      */
     public void parse(String rivi) throws ExceptionHandler {
         try {
