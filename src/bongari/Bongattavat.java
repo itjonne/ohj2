@@ -23,13 +23,30 @@ public class Bongattavat {
     /**
      * Palauttaa alkioiden lukumäärän
      * @return alkioiden lukumäärä
+     * @example
+     * <pre name="test">
+     * Bongattavat bongattavat = new Bongattavat();
+     * bongattavat.getLkm() === 0;
+     * Bongattava bongattava = new Bongattava();
+     * bongattavat.lisaa(bongattava);
+     * bongattavat.getLkm() === 1;
+     * </pre>
      */
     public int getLkm() {
         return this.lkm;
     }
     
     /**
-     * @return alkiot
+     * Palauttaa kaikki tietorakenteesta löytyvät alkiot
+     * TODO: Tarvitaanko?
+     * @return kaikki alkiot
+     * @example
+     * <pre name="test">
+     * Bongattavat bongattavat = new Bongattavat();
+     * Bongattava bongattava = new Bongattava();
+     * bongattavat.lisaa(bongattava);
+     * bongattavat.getAlkiot().size() === 1;
+     * </pre>
      */
     public HashMap<Integer, Bongattava> getAlkiot() {
         return this.alkiot;
@@ -38,6 +55,16 @@ public class Bongattavat {
     /**
      * Lisätään bongattava-olio tietorakenteeseen
      * @param bongattava lisättävä bongattava-olio
+     * @example
+     * <pre name="test">
+     * Bongattavat bongattavat = new Bongattavat();
+     * Bongattava bongattava = new Bongattava();
+     * Bongattava bongattava2 = new Bongattava();
+     * bongattavat.lisaa(bongattava);
+     * bongattavat.getLkm() === 1;
+     * bongattavat.lisaa(bongattava2);
+     * bongattavat.getLkm() === 2;
+     * </pre>
      */
     public void lisaa(Bongattava bongattava) {      
         alkiot.put(bongattava.getBongattavaId(), bongattava);
@@ -48,18 +75,44 @@ public class Bongattavat {
      * Etsii tietorakenteesta merkkijonon nimi-ehdon täyttävät otukset
      * @param hakuehto merkkijono, jolla haetaan
      * @return palauttaa nimi-hakuehdon täyttävät bongattavat otukset
+     * @example
+     * <pre name="test">
+     * Bongattavat bongattavat = new Bongattavat();
+     * Bongattava bongattava = new Bongattava();
+     * bongattava.setBongattavaId(1);
+     * bongattava.setNimi("Kissa");
+     * Bongattava bongattava2 = new Bongattava();
+     * bongattava2.setBongattavaId(2);
+     * bongattava2.setNimi("Kassa");
+     * bongattavat.lisaa(bongattava); bongattavat.lisaa(bongattava2);
+     * bongattavat.etsi("ssa").size() === 2;
+     * bongattavat.etsi("kissa").size() === 1;
+     * bongattavat.etsi("IsSa").size() === 1;
+     * bongattavat.etsi("koira").size() === 0;
+     * </pre>
      */
     public List<Bongattava> etsi(String hakuehto) {
         List<Bongattava> loydetyt = new ArrayList<Bongattava>();
         alkiot.forEach((key,value) -> {
-            if (value.getNimi().contains(hakuehto)) loydetyt.add(value);
+            if (value.getNimi().toLowerCase().contains(hakuehto.toLowerCase())) loydetyt.add(value);
         });
         return loydetyt;
     }
     
     /**
      * @param id haettavan olion id
-     * @return palauttaa id:llä haettavan olion
+     * @return palauttaa id:llä haettavan olion, jos ei löydy niin null
+     * @example
+     * <pre name="test">
+     * Bongattavat bongattavat = new Bongattavat();
+     * Bongattava bongattava = new Bongattava();
+     * bongattava.setBongattavaId(1);
+     * bongattavat.lisaa(bongattava);
+     * Bongattava loytynyt = bongattavat.anna(1);
+     * Bongattava loytynyt2 = bongattavat.anna(0);
+     * loytynyt.getBongattavaId() === 1;
+     * loytynyt2 === null;
+     * </pre>
      */
     public Bongattava anna(int id) {
         return alkiot.get(id);
