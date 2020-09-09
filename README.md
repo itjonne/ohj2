@@ -1,5 +1,3 @@
-# Scenebuilder Vaihe 1:n Branch
+# Scenebuilder Vaihe 4:n Branch
 
-## TODO:
-- responsiivisuus
-- pient√§ ulkoasuviilausta
+Comtestaukset tehty nyt kaikkialle. Ei osata viel‰ tallentaa tiedostoon.
