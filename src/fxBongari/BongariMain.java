@@ -1,6 +1,8 @@
 package fxBongari;
 	
+import bongari.Kerho;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
@@ -18,8 +20,12 @@ public class BongariMain extends Application {
 	public void start(Stage primaryStage) {
 		try {
 		    final FXMLLoader ldr = new FXMLLoader(getClass().getResource("BongariGUIView.fxml"));
-            final Pane root = (Pane)ldr.load();
-            final BongariGUIController bongariCtrl = (BongariGUIController)ldr.getController();
+		    final BongariGUIController bongariCtrl = (BongariGUIController)ldr.getController();
+            /*
+		    Kerho kerho = new Kerho();
+            bongariCtrl.setKerho(kerho);
+		    */
+		    final Pane root = (Pane)ldr.load();
             
             final Scene scene = new Scene(root);
             scene.getStylesheets().add(getClass().getResource("bongari.css").toExternalForm());
@@ -28,9 +34,9 @@ public class BongariMain extends Application {
             
             primaryStage.setOnCloseRequest((event) -> {
                 // Kutsutaan voikoSulkea-metodia
-                if ( !bongariCtrl.voikoSulkea() ) event.consume();
+                if ( !bongariCtrl.voikoSulkea() ) event.consume(); 
             });
-            
+
 			primaryStage.show();
 		} catch(Exception e) {
 			e.printStackTrace();

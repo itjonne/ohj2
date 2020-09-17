@@ -93,10 +93,25 @@ public class Bongattavat {
      */
     public List<Bongattava> etsi(String hakuehto) {
         List<Bongattava> loydetyt = new ArrayList<Bongattava>();
+        // Tyhjällä haulla palauttaa kaikki.
+        if (hakuehto == "") {
+            alkiot.forEach((key, value) -> {
+                loydetyt.add(value);
+            });
+        }
+        
         alkiot.forEach((key,value) -> {
             if (value.getNimi().toLowerCase().contains(hakuehto.toLowerCase())) loydetyt.add(value);
         });
         return loydetyt;
+    }
+    
+    /**
+     * @param id haettavan alkion id
+     * @return bongattavan otuksen
+     */
+    public Bongattava etsiId(int id) {
+        return alkiot.get(id);
     }
     
     /**

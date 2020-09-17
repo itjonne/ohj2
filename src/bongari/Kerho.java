@@ -24,6 +24,30 @@ public class Kerho {
     }
     
     /**
+     * @param hakuehto hakuehto, jolla haetaan
+     * @return hakuehtoa vastaavan jäsenistön
+     */
+    public List<Jasen> etsiJasenet(String hakuehto) {
+        return jasenet.etsi(hakuehto);
+    }
+    
+    /**
+     * @param hakuehto hakuehto, jolla haetaan
+     * @return hakuehtoa vastaavat bongattavat
+     */
+    public List<Bongattava> etsiBongattavat(String hakuehto) {
+        return bongattavat.etsi(hakuehto);
+    }
+    
+    /**
+     * @param id bongattavan otuksen id, jota etsitään
+     * @return bongattava otus
+     */
+    public Bongattava etsiBongattavatId(int id) {
+        return bongattavat.etsiId(id);
+    }
+     
+    /**
      * Asettaa tiedostojen perusnimet
      * @param nimi uusi nimi
      */

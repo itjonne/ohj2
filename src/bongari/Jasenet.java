@@ -132,6 +132,13 @@ public class Jasenet {
      */
     public List<Jasen> etsi(String hakuehto) {
         List<Jasen> loydetyt = new ArrayList<Jasen>();
+        // Tyhjällä haulla voi hakea kaikki jäsenet
+        if (hakuehto == "") {
+            for (Jasen jasen : alkiot) {
+                if (jasen != null) loydetyt.add(jasen);               
+            }
+            return loydetyt;
+        }
         for (Jasen jasen : alkiot) {
             if (jasen != null && (jasen.getEtunimi().toLowerCase().contains(hakuehto.toLowerCase()) || jasen.getSukunimi().toLowerCase().contains(hakuehto.toLowerCase()))) {
                 loydetyt.add(jasen);
