@@ -30,7 +30,9 @@ public class BongariGUIController implements Initializable {
     @FXML private TextField bongauksenTiedotTieteellinenNimi;
     @FXML private TextField bongauksenTiedotLaji;
     @FXML private TextField bongauksenTiedotHeimo;
-    @FXML private TextArea bongauksenTiedotTietoja;
+    @FXML private TextField bongauksenTiedotPvm;
+    @FXML private TextField bongauksenTiedotKaupunki;
+    @FXML private TextArea bongauksenTiedotLisatietoja;
 
     @Override
     public void initialize(URL url, ResourceBundle bundle) {
@@ -115,9 +117,7 @@ public class BongariGUIController implements Initializable {
                 }
         } catch (ExceptionHandler e) {
             System.out.println(e);
-        }
-        
-        
+        }      
     }
     
     private void naytaJasen() {
@@ -158,7 +158,9 @@ public class BongariGUIController implements Initializable {
             bongauksenTiedotTieteellinenNimi.setText("");
             bongauksenTiedotHeimo.setText("");
             bongauksenTiedotLaji.setText("");
-            bongauksenTiedotTietoja.setText("");
+            bongauksenTiedotPvm.setText("");
+            bongauksenTiedotKaupunki.setText("");
+            bongauksenTiedotLisatietoja.setText("");
             return;
         }
         Bongattava bongattava = kerho.etsiBongattavatId(bongaus.getBongattavaId());
@@ -166,6 +168,9 @@ public class BongariGUIController implements Initializable {
         bongauksenTiedotTieteellinenNimi.setText(bongattava.getTieteellinenNimi());
         bongauksenTiedotHeimo.setText(bongattava.getHeimo());
         bongauksenTiedotLaji.setText(bongattava.getLaji());
-        bongauksenTiedotTietoja.setText(bongaus.getTietoja());
+        // Bongauksen tiedot
+        bongauksenTiedotPvm.setText(bongaus.getPvm());
+        bongauksenTiedotKaupunki.setText(bongaus.getKaupunki());
+        bongauksenTiedotLisatietoja.setText(bongaus.getTietoja());
     }
 }
