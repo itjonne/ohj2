@@ -6,6 +6,7 @@ import java.util.ResourceBundle;
 
 import fi.jyu.mit.fxgui.Dialogs;
 import fi.jyu.mit.fxgui.ListChooser;
+import fi.jyu.mit.fxgui.ModalController;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -17,6 +18,7 @@ import bongari.Bongaus;
 import bongari.ExceptionHandler;
 import bongari.Jasen;
 import bongari.Kerho;
+import fxBongari.JasenMuokkaaDialogController;
 
 /**
  * @author Jonne
@@ -43,6 +45,11 @@ public class BongariGUIController implements Initializable {
      */
     @FXML private void handleUusiJasen() {
         Dialogs.showMessageDialog("Ei osata vielä lisätä");
+    }
+    
+    @FXML private void handleMuokkaajasen() {
+        muokkaaJasen();
+        // ModalController.showModal(BongariGUIController.class.getResource("JasenMuokkaaDialogView.fxml"), "Muokkaa", null, new Jasen());
     }
     
     /**
@@ -124,6 +131,39 @@ public class BongariGUIController implements Initializable {
         Jasen jasenKohdalla = jasenLista.getSelectedObject();
         if (jasenKohdalla == null) return;
         naytaJasenenBongaukset(jasenKohdalla);      
+    }
+    
+    // Tämä pitää ehkä vielä muokata siistimmäksi (TODO: Controlleri ei ehkä saa muokata itsekseen tuota)
+    private void muokkaaJasen() {
+        Jasen jasenKohdalla = jasenLista.getSelectedObject();       
+        if (jasenKohdalla == null) return;
+        
+        Jasen muokattuJasen;
+        try {
+        muokattuJasen = JasenMuokkaaDialogController.kysyJasen(null, jasenKohdalla.clone()); // Palauttaa null, jos jotain meni pieleen
+        if (muokattuJasen == null) return;
+        // Jos kaikki kunnossa, muokataan.
+        jasenKohdalla.setEtunimi(muokattuJasen.getEtunimi());
+        jasenKohdalla.setSukunimi(muokattuJasen.getSukunimi());
+        paivita();
+        } catch (CloneNotSupportedException e) {
+            Dialogs.showMessageDialog(e.getMessage());
+        }       
+    }
+    
+    private void paivita() {
+        jasenLista.clear();
+        jasenLista.addSelectionListener(e -> naytaJasen());
+        List<Jasen> jasenet = kerho.etsiJasenet("");
+        if (!jasenet.isEmpty()) {
+            for (Jasen jasen : jasenet) {
+                if (jasen != null) jasenLista.add(jasen.getEtunimi(), jasen);           
+                }
+            // Jos on jäsenistöä, valittuna on ensimmäinen.
+            jasenLista.setSelectedIndex(0);
+        } else {
+            jasenLista.add("Ei jäseniä", new Jasen());
+            }
     }
     
     private void naytaJasenenBongaukset(Jasen jasen) {

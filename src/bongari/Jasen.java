@@ -9,7 +9,7 @@ import fi.jyu.mit.ohj2.Mjonot;
  * @version 2 Sep 2020
  *
  */
-public class Jasen {
+public class Jasen implements Cloneable {
     private int jasenId;
     private String etunimi = "";
     private String sukunimi = "";
@@ -156,6 +156,13 @@ public class Jasen {
      */
     public int getJasenId() {
         return this.jasenId;
+    }
+    
+    @Override
+    public Jasen clone() throws CloneNotSupportedException {
+        Jasen uusi;
+        uusi = (Jasen) super.clone();
+        return uusi;
     }
     
 }

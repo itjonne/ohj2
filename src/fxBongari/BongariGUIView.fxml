@@ -27,7 +27,8 @@
           </Menu>
           <Menu mnemonicParsing="false" text="_Muokkaa">
             <items>
-              <MenuItem mnemonicParsing="false" text="Delete" />
+                  <MenuItem mnemonicParsing="false" onAction="#handleMuokkaajasen" text="Muokkaa" />
+              <MenuItem mnemonicParsing="false" text="Poista" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="_Apua">
