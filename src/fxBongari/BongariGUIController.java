@@ -70,7 +70,7 @@ public class BongariGUIController implements Initializable {
      * Käsitellään tallennuskäsky
      */
     @FXML private void handleTallenna() {
-        tallenna();
+        muokkaaBongaus();
     }
     
     /**
@@ -133,7 +133,6 @@ public class BongariGUIController implements Initializable {
         naytaJasenenBongaukset(jasenKohdalla);      
     }
     
-    // Tämä pitää ehkä vielä muokata siistimmäksi (TODO: Controlleri ei ehkä saa muokata itsekseen tuota)
     private void muokkaaJasen() {
         Jasen jasenKohdalla = jasenLista.getSelectedObject();       
         if (jasenKohdalla == null) return;
@@ -143,8 +142,7 @@ public class BongariGUIController implements Initializable {
         muokattuJasen = JasenMuokkaaDialogController.kysyJasen(null, jasenKohdalla.clone()); // Palauttaa null, jos jotain meni pieleen
         if (muokattuJasen == null) return;
         // Jos kaikki kunnossa, muokataan.
-        jasenKohdalla.setEtunimi(muokattuJasen.getEtunimi());
-        jasenKohdalla.setSukunimi(muokattuJasen.getSukunimi());
+        kerho.muokkaa(muokattuJasen);
         paivita();
         } catch (CloneNotSupportedException e) {
             Dialogs.showMessageDialog(e.getMessage());
@@ -190,6 +188,26 @@ public class BongariGUIController implements Initializable {
         Bongaus bongausKohdalla = bongauksetLista.getSelectedObject();
         if (bongausKohdalla == null) return;
         naytaBongauksenTiedot(bongausKohdalla);
+    }
+    
+    private void muokkaaBongaus() {
+        Bongaus bongausKohdalla = bongauksetLista.getSelectedObject();
+        if (bongausKohdalla == null) return;
+        // Alkukantainen virheidenhallinta
+        if (bongauksenTiedotKaupunki.getText().trim().contentEquals("") || bongauksenTiedotPvm.getText().trim().contentEquals("")) {
+            Dialogs.showMessageDialog("Bongauksen tiedot eivät saa olla tyhjiä");
+        }
+        Bongaus muokattuBongaus;
+        try {
+            muokattuBongaus = bongausKohdalla.clone();
+            muokattuBongaus.setKaupunki(bongauksenTiedotKaupunki.getText());
+            muokattuBongaus.setPvm(bongauksenTiedotPvm.getText());
+            muokattuBongaus.setTietoja(bongauksenTiedotLisatietoja.getText());
+            kerho.muokkaa(muokattuBongaus);
+            paivita();
+        } catch (CloneNotSupportedException e) {   
+            Dialogs.showMessageDialog(e.getMessage());
+        }    
     }
     
     private void naytaBongauksenTiedot(Bongaus bongaus) {

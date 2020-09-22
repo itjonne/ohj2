@@ -23,6 +23,14 @@ public class Kerho {
         bongaukset.lisaa(bongaus);
     }
     
+    public void muokkaa(Jasen jasen) {
+        jasenet.muokkaa(jasen);
+    }
+    
+    public void muokkaa(Bongaus bongaus) {
+        bongaukset.muokkaa(bongaus);
+    }
+    
     /**
      * @param hakuehto hakuehto, jolla haetaan
      * @return hakuehtoa vastaavan jäsenistön

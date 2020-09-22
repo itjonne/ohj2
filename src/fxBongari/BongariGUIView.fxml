@@ -149,7 +149,7 @@
                <bottom>
                   <HBox>
                      <children>
-                        <Button mnemonicParsing="false" text="Tallenna" />
+                        <Button mnemonicParsing="false" onAction="#handleTallenna" text="Tallenna" />
                      </children>
                   </HBox>
                </bottom>

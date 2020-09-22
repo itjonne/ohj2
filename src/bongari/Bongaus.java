@@ -11,7 +11,7 @@ import fi.jyu.mit.ohj2.Mjonot;
  * @version 3 Sep 2020
  *
  */
-public class Bongaus {
+public class Bongaus implements Cloneable {
     private int bongausId;
     private int jasenId;
     private int bongattavaId;
@@ -258,6 +258,13 @@ public class Bongaus {
      */
     public void tulosta(OutputStream os) {
         tulosta(new PrintStream(os));
+    }
+    
+    @Override
+    public Bongaus clone() throws CloneNotSupportedException {
+        Bongaus uusi;
+        uusi = (Bongaus) super.clone();
+        return uusi;
     }
 
 }
