@@ -54,7 +54,7 @@
                      <HBox.margin>
                         <Insets right="10.0" />
                      </HBox.margin></Button>
-                  <Button mnemonicParsing="false" onAction="#handleTallenna" text="Poista Jäsen" />
+                  <Button mnemonicParsing="false" onAction="#handlePoistaJasen" text="Poista Jäsen" />
                </children>
             </HBox>
          </bottom>

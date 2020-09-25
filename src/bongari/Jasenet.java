@@ -9,6 +9,7 @@ import java.util.List;
 
 /**
  * Bongarikerhon jäsenistö
+ * TODO: Yli viiden jäsenen lisääminen ei vielä toimi
  * 
  * @author Jonne
  * @version 2 Sep 2020

@@ -14,7 +14,9 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import bongari.Bongattava;
+import bongari.Bongattavat;
 import bongari.Bongaus;
+import bongari.BongausTietueet;
 import bongari.ExceptionHandler;
 import bongari.Jasen;
 import bongari.Kerho;
@@ -44,7 +46,7 @@ public class BongariGUIController implements Initializable {
      * Käsitellään uuden jäsenen lisääminen
      */
     @FXML private void handleUusiJasen() {
-        Dialogs.showMessageDialog("Ei osata vielä lisätä");
+        uusiJasen();
     }
     
     @FXML private void handleMuokkaajasen() {
@@ -52,11 +54,23 @@ public class BongariGUIController implements Initializable {
         // ModalController.showModal(BongariGUIController.class.getResource("JasenMuokkaaDialogView.fxml"), "Muokkaa", null, new Jasen());
     }
     
+    @FXML private void handlePoistaJasen() {
+        Jasen jasenKohdalla = jasenLista.getSelectedObject();
+        if (jasenKohdalla == null) return;
+        Boolean vastaus = Dialogs.showQuestionDialog("Poista jäsen", "Haluatko varmasti poistaa valitun jäsenen?", "Kyllä", "Ei");
+        if (vastaus == true) {
+        kerho.poista(jasenKohdalla);
+        paivita();
+        } else {
+            return;
+        }
+    }
+    
     /**
      * Käsitellään uuden bongauksen lisääminen
      */
     @FXML private void handleUusiBongaus() {
-        Dialogs.showMessageDialog("Ei osata vielä lisätä");
+        uusiBongaus();
     }
     
     /**
@@ -127,6 +141,15 @@ public class BongariGUIController implements Initializable {
         }      
     }
     
+    private void uusiJasen() {
+        Jasen uusiJasen = new Jasen();
+        uusiJasen = JasenLisaaDialogController.kysyJasen(null, uusiJasen);
+        if (uusiJasen == null) return;
+        uusiJasen.rekisteroi();
+        kerho.lisaa(uusiJasen);
+        paivita();
+    }
+    
     private void naytaJasen() {
         Jasen jasenKohdalla = jasenLista.getSelectedObject();
         if (jasenKohdalla == null) return;
@@ -182,6 +205,14 @@ public class BongariGUIController implements Initializable {
             bongauksetLista.add("Käyttäjällä ei ole vielä bongauksia", bongaus);
             bongauksetLista.setSelectedIndex(0);
         }
+    }
+    
+    private void uusiBongaus() {
+        BongausTietueet uusiBongaus = new BongausTietueet();
+        List<Bongattava> bongattavat = kerho.etsiBongattavat("");
+        uusiBongaus.setBongattavat(bongattavat);
+        uusiBongaus = BongausLisaaDialogController.kysyBongaus(null, uusiBongaus);
+        
     }
     
     private void naytaBongaus() {

@@ -17,40 +17,31 @@ import javafx.stage.Stage;
  * @author Jonne
  * @version 18 Sep 2020
  */
-public class JasenMuokkaaDialogController implements ModalControllerInterface<Jasen> {
+public class JasenLisaaDialogController implements ModalControllerInterface<Jasen> {
     @FXML private TextField textFieldEtunimi;
     @FXML private TextField textFieldSukunimi;
     
     @FXML void handleKumoa() {
-        this.jasenKohdalla = null;
+        this.uusiJasen = null;
         ModalController.closeStage(textFieldEtunimi);
     }
 
-    @FXML void handleTallenna() {
-        if (jasenKohdalla != null && (textFieldEtunimi.getText().trim().contentEquals("") || textFieldSukunimi.getText().trim().contentEquals(""))) {
+    @FXML void handleLisaa() {
+        if (uusiJasen != null && (textFieldEtunimi.getText().trim().contentEquals("") || textFieldSukunimi.getText().trim().contentEquals(""))) {
             Dialogs.showMessageDialog("Nimi ei saa olla tyhjä");
             return;
         }
-        this.jasenKohdalla.setEtunimi(textFieldEtunimi.getText());
-        this.jasenKohdalla.setSukunimi(textFieldSukunimi.getText());
+        this.uusiJasen.setEtunimi(textFieldEtunimi.getText());
+        this.uusiJasen.setSukunimi(textFieldSukunimi.getText());
         ModalController.closeStage(textFieldEtunimi);
     }
 
     // =======================================================
-    private Jasen jasenKohdalla;
-    
-    /**
-     * Näyttää jäsenen tiedot tekstikentissä
-     * @param jasen näytettävä jäsen
-     */
-    public void naytaJasen(Jasen jasen) {
-        textFieldEtunimi.setText(jasen.getEtunimi());
-        textFieldSukunimi.setText(jasen.getSukunimi());
-    }
+    private Jasen uusiJasen;
 
     @Override
     public Jasen getResult() {
-         return this.jasenKohdalla;
+         return this.uusiJasen;
     }
 
     @Override
@@ -60,9 +51,7 @@ public class JasenMuokkaaDialogController implements ModalControllerInterface<Ja
     
     @Override
     public void setDefault(Jasen oletus) {
-        this.jasenKohdalla = oletus;
-        naytaJasen(jasenKohdalla);
-        
+        this.uusiJasen = oletus;
     }
     
     /**
@@ -73,7 +62,7 @@ public class JasenMuokkaaDialogController implements ModalControllerInterface<Ja
      */
     public static Jasen kysyJasen(Stage modalityStage, Jasen oletus) {
         return ModalController.showModal(
-                JasenMuokkaaDialogController.class.getResource("JasenMuokkaaDialogView.fxml"),
+                JasenLisaaDialogController.class.getResource("JasenLisaaDialogView.fxml"),
                 "Kerho",
                 modalityStage, oletus, null 
             );
