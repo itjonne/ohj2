@@ -93,13 +93,16 @@ public class BongausLisaaDialogController implements ModalControllerInterface<Bo
     BongausTietueet uusiBongaus;
     
     private void uusiBongaus() {
+        if (uusiBongaus == null) {
+            ModalController.closeStage(lajiListChooser);
+        }
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        if (uusiBongaus != null && (kaupunkiTextInput.getText().trim().contentEquals(""))) {
-            Dialogs.showMessageDialog("Kaupunki ei saa olla tyhjä");           
+        if (kaupunkiTextInput.getText().trim().contentEquals("")) {
+            Dialogs.showMessageDialog("Kaupunki-tietue ei saa olla tyhjä");           
             return;                 
         }
-        if (uusiBongaus != null && pvmDatePicker.getValue() == null) {
-            Dialogs.showMessageDialog("Anna validi päivämäärä muotoa dd/mm/yyyy tai valitse valikosta"); 
+        if (pvmDatePicker.getValue() == null || onkoValidiPvm(pvmDatePicker.getValue().format(formatter)) == false) {
+            Dialogs.showMessageDialog("Valitse päivämäärä valikosta"); 
             return;
         }
 
@@ -133,7 +136,8 @@ public class BongausLisaaDialogController implements ModalControllerInterface<Bo
     private Boolean onkoValidiPvm(String pvm) {
         Pattern pattern = Pattern.compile("\\d\\d[/]\\d\\d[/]\\d\\d\\d\\d");
         Matcher matcher = pattern.matcher(pvm);
-        
+        //System.out.println(pvm);
+        //System.out.println(matcher.find());
         return matcher.find();
     }
 

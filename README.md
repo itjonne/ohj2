@@ -15,3 +15,4 @@ Bongausikkuna valmis(ulkoasua vähän joutuu hiomaan), toiminnot puuttuvat.
 - Tiedostoon tallennus
 - Bongauksen poisto
 - Bongauksen muokkauksessa validointi
+- Bongauksen lisäyksen yhteydessä pidä entinen valittu jäsen
