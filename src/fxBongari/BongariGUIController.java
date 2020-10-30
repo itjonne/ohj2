@@ -83,7 +83,7 @@ public class BongariGUIController implements Initializable {
     /**
      * Käsitellään tallennuskäsky
      */
-    @FXML private void handleTallenna() {
+    @FXML private void handleMuokkaaBongaus() {
         muokkaaBongaus();
     }
     

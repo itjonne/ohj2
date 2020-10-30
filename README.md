@@ -1,3 +1,7 @@
-# Scenebuilder Vaihe 4:n Branch
+# HT Vaihe 4/5
 
-Comtestaukset tehty nyt kaikkialle. Ei osata viel� tallentaa tiedostoon.
+Osataan lukea tiedostosta.
+Ei vielä tallennustoimintoja.
+
+Osataan lisätä/muokata/poistaa jäseniä
+Bongausikkuna valmis(ulkoasua vähän joutuu hiomaan), toiminnot puuttuvat.
