@@ -1,10 +1,13 @@
 package fxBongari;
 
 import java.net.URL;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import bongari.Bongattava;
 import bongari.Bongattavat;
@@ -12,6 +15,7 @@ import bongari.Bongaus;
 import bongari.BongausTietueet;
 import bongari.Jasen;
 import bongari.Kerho;
+import fi.jyu.mit.fxgui.Dialogs;
 import fi.jyu.mit.fxgui.ListChooser;
 import fi.jyu.mit.fxgui.ModalController;
 import fi.jyu.mit.fxgui.ModalControllerInterface;
@@ -73,6 +77,9 @@ public class BongausLisaaDialogController implements ModalControllerInterface<Bo
         alusta();
     }
     
+    /**
+     * Alustaa bongattavat otukset listaan
+     */
     public void alusta() {
         List<Bongattava> bongattavat = uusiBongaus.getBongattavat();
         for (Bongattava bongattava : bongattavat) {
@@ -86,7 +93,21 @@ public class BongausLisaaDialogController implements ModalControllerInterface<Bo
     BongausTietueet uusiBongaus;
     
     private void uusiBongaus() {
-        //
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        if (uusiBongaus != null && (kaupunkiTextInput.getText().trim().contentEquals(""))) {
+            Dialogs.showMessageDialog("Kaupunki ei saa olla tyhjä");           
+            return;                 
+        }
+        if (uusiBongaus != null && pvmDatePicker.getValue() == null) {
+            Dialogs.showMessageDialog("Anna validi päivämäärä muotoa dd/mm/yyyy tai valitse valikosta"); 
+            return;
+        }
+
+        this.uusiBongaus.setKaupunki(kaupunkiTextInput.getText().trim());
+        this.uusiBongaus.setPvm(pvmDatePicker.getValue().format(formatter));
+        this.uusiBongaus.setTietoja(lisatietojaTextArea.getText().trim());
+        this.uusiBongaus.setBongattavaId(lajiListChooser.getSelectedObject().getBongattavaId());
+        ModalController.closeStage(kaupunkiTextInput);
     }
     
     /**
@@ -107,6 +128,13 @@ public class BongausLisaaDialogController implements ModalControllerInterface<Bo
     public void initialize(URL arg0, ResourceBundle arg1) {
         // alusta();
         
-    }  
+    } 
+    
+    private Boolean onkoValidiPvm(String pvm) {
+        Pattern pattern = Pattern.compile("\\d\\d[/]\\d\\d[/]\\d\\d\\d\\d");
+        Matcher matcher = pattern.matcher(pvm);
+        
+        return matcher.find();
+    }
 
 }

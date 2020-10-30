@@ -207,12 +207,26 @@ public class BongariGUIController implements Initializable {
         }
     }
     
+    /*
+     * Tässä piti käyttää aputietuetta, jotta saatiin bongattavat otukset
+     * listattua näkymässä. En tiedä voisiko tehdä järkevämmin, yritin muutamalla
+     * eri tavalla, mutta tämä oli ensimmäinen toimiva.
+     */
     private void uusiBongaus() {
-        BongausTietueet uusiBongaus = new BongausTietueet();
+        BongausTietueet uusiBongausTietue = new BongausTietueet();
         List<Bongattava> bongattavat = kerho.etsiBongattavat("");
-        uusiBongaus.setBongattavat(bongattavat);
-        uusiBongaus = BongausLisaaDialogController.kysyBongaus(null, uusiBongaus);
+        uusiBongausTietue.setBongattavat(bongattavat);
+        uusiBongausTietue = BongausLisaaDialogController.kysyBongaus(null, uusiBongausTietue);
         
+        Bongaus uusiBongaus = new Bongaus();
+        uusiBongaus.setBongattavaId(uusiBongausTietue.getBongattavaId());
+        uusiBongaus.setKaupunki(uusiBongausTietue.getKaupunki());
+        uusiBongaus.setPvm(uusiBongausTietue.getPvm());
+        uusiBongaus.setTietoja(uusiBongausTietue.getTietoja());
+        uusiBongaus.setJasenId(jasenLista.getSelectedObject().getJasenId());
+        uusiBongaus.rekisteroi();
+        kerho.lisaa(uusiBongaus);
+        paivita();
     }
     
     private void naytaBongaus() {

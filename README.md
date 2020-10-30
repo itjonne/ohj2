@@ -4,7 +4,7 @@ Osataan lukea tiedostosta.
 Ei vielä tallennustoimintoja.
 
 Osataan lisätä/muokata/poistaa jäseniä
-Osataan muokata bongauksia.
+Osataan muokata ja lisätä bongauksia.
 
 Bongausikkuna valmis(ulkoasua vähän joutuu hiomaan), toiminnot puuttuvat.
 
@@ -13,4 +13,5 @@ Bongausikkuna valmis(ulkoasua vähän joutuu hiomaan), toiminnot puuttuvat.
 - Ulkoasun siistiminen
 - Loput comtestit
 - Tiedostoon tallennus
-- Bongauksen lisäys/poisto
+- Bongauksen poisto
+- Bongauksen muokkauksessa validointi
