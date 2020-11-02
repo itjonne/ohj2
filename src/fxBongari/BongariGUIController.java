@@ -77,7 +77,7 @@ public class BongariGUIController implements Initializable {
      * Käsitellään bongauksen poistaminen
      */
     @FXML private void handlePoistaBongaus() {
-        Dialogs.showMessageDialog("Ei osata vielä lisätä");
+        poistaBongaus();
     }
     
     /**
@@ -253,6 +253,19 @@ public class BongariGUIController implements Initializable {
         } catch (CloneNotSupportedException e) {   
             Dialogs.showMessageDialog(e.getMessage());
         }    
+    }
+    
+    private void poistaBongaus() {
+        Bongaus bongausKohdalla = bongauksetLista.getSelectedObject();
+        if (bongausKohdalla == null) return;
+        Boolean vastaus = Dialogs.showQuestionDialog("Poista jäsen", "Haluatko varmasti poistaa valitun bongauksen?", "Kyllä", "Ei");
+        if (vastaus == true) {
+        kerho.poista(bongausKohdalla);
+        paivita(jasenLista.getSelectedIndex());
+        } else {
+            return;
+        }
+        
     }
     
     private void naytaBongauksenTiedot(Bongaus bongaus) {

@@ -217,6 +217,16 @@ public class Kerho {
     }
     
     /**
+     * Poistaa valitun bongauksen tietorakenteesta
+     * @param bongaus poistettava bongaus
+     * @return true jos poistaminen onnistui, false jos ei
+     */
+    public boolean poista(Bongaus bongaus) {
+        boolean onnistuko = bongaukset.poista(bongaus.getBongausId());
+        return onnistuko;   
+    }
+    
+    /**
      * Testipääohjelma
      * @param args ei käytössä
      * @throws ExceptionHandler heitettävä exception

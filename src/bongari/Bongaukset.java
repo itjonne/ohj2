@@ -57,6 +57,7 @@ public class Bongaukset extends TiedostostaLuettava {
      * TODO: Voiko iteraattori hajota?!?!
      * Poistaa bongauksen id-numeron perusteella
      * @param bongausId poistettavan bongauksen id
+     * @return true jos poisto onnistui, muuten false
      * @example
      * <pre name="test">
      * Bongaukset bongaukset = new Bongaukset();
@@ -71,12 +72,16 @@ public class Bongaukset extends TiedostostaLuettava {
      * bongaukset.getLkm() === 0;
      * </pre>
      */
-    public void poista(int bongausId) {
+    public boolean poista(int bongausId) {
         Iterator<Bongaus> itr = alkiot.iterator();
         while (itr.hasNext()) {
             Bongaus bongaus = itr.next();
-            if ( bongaus.getBongausId() == bongausId) itr.remove();
+            if ( bongaus.getBongausId() == bongausId) {
+                itr.remove();
+                return true;
+            }
         }
+        return false;
     }
     
     /**
