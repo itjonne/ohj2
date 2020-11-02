@@ -1,15 +1,15 @@
 ;Luontobongaajien kerho ry
-; Kenttien jÃ¤rjestys tiedostossa on seuraava:
+;Kenttien jÃƒÂ¤rjestys tiedostossa on seuraava:
 ;id|etunimi|sukunimi
-1|Testi|Testaaja
-2|Aku|Ankka
-3|Pekka|Töpöhäntä
-4|Testi|Testaaja
-5|Pelle|Peloton
-6|Antti|Anttila
-7|Testi|Testaaja
-8|Aku|Ankka
-9|Pekka|Töpöhäntä
-10|Testi|Testaaja
-11|Aku|Ankka
-12|Pekka|Töpöhäntä
+1|Testi|Testaaja;
+2|Aku|Ankka;
+3|Pekka|Tï¿½pï¿½hï¿½ntï¿½;
+4|Testi|Testaaja;
+5|Pelle|Peloton;
+6|Antti|Anttila;
+6|Antti|Anttila;
+7|Testi|Testaaja;
+8|Aku|Ankka;
+9|Pekka|Tï¿½pï¿½hï¿½ntï¿½;
+10|Testi|Testaaja;
+11|Aku|Ankka;

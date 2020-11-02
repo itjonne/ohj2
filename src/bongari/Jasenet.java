@@ -1,9 +1,12 @@
 package bongari;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -307,6 +310,38 @@ public class Jasenet {
      */
     public String getBakNimi() {
         return tiedostonPerusNimi + ".bak";
+    }
+    
+    /**
+     * Tallentaa tiedostoon haluttuun paikkaan
+     * @throws ExceptionHandler Jos joku menee rikki
+     */
+    public void tallenna() throws ExceptionHandler {
+        if (!muutettu) return;
+        
+        File fbak = new File(getBakNimi());
+        File ftied = new File(getTiedostonNimi());
+        fbak.delete(); // if .. System.err.println("Ei voi tuhota");
+        ftied.renameTo(fbak); // if .. System.err.println("Ei voi nimetä");
+
+        try ( PrintWriter fo = new PrintWriter(new FileWriter(ftied.getCanonicalPath())) ) {
+            fo.println(";Luontobongaajien kerho ry");
+            fo.println(";Kenttien jÃ¤rjestys tiedostossa on seuraava:");
+            fo.println(";id|etunimi|sukunimi");
+            for (Jasen jasen : alkiot) {
+                if (jasen != null) {                    
+                    fo.println(jasen.toString());
+                }
+            }
+            //} catch ( IOException e ) { // ei heitä poikkeusta
+            //  throw new SailoException("Tallettamisessa ongelmia: " + e.getMessage());
+        } catch ( FileNotFoundException ex ) {
+            throw new ExceptionHandler("Tiedosto " + ftied.getName() + " ei aukea");
+        } catch ( IOException ex ) {
+            throw new ExceptionHandler("Tiedoston " + ftied.getName() + " kirjoittamisessa ongelmia");
+        }
+
+        muutettu = false;
     }
     
     /**

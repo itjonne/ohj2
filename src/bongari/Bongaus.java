@@ -267,4 +267,8 @@ public class Bongaus implements Cloneable {
         return uusi;
     }
 
+    @Override
+    public String toString() {
+        return String.format("%d|%d|%d|%s|%s|%s;", getBongausId(), getJasenId(), getBongattavaId(), getKaupunki(), getPvm(), getTietoja()); 
+    }
 }

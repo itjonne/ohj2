@@ -165,4 +165,26 @@ public class Jasen implements Cloneable {
         return uusi;
     }
     
+    /**
+     * 
+     * @example
+     * <pre name="test">
+     * Jasen jasen = new Jasen();
+     * jasen.setJasenId(1);
+     * jasen.setEtunimi("Aku");
+     * jasen.setSukunimi("Ankka");
+     * jasen.toString() === "1|Aku|Ankka;";
+     * Jasen jasen2 = new Jasen();
+     * jasen2.setJasenId(2);
+     * jasen2.setEtunimi("Roope");
+     * jasen2.setSukunimi("Setä");
+     * jasen2.toString() === "2|Roope|Setä;";
+     * 
+     * </pre>
+     */
+    @Override
+    public String toString() {
+        return String.format("%d|%s|%s;", getJasenId(), getEtunimi(), getSukunimi()); 
+    }
+    
 }

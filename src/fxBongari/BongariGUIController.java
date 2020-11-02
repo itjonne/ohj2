@@ -100,7 +100,7 @@ public class BongariGUIController implements Initializable {
      * @return true jos saa sulkea sovelluksen, muuten false
      */
     public boolean voikoSulkea() {
-        //tallenna(); TODO: ei osata vielä
+        tallenna();
         return true;
     }
     
@@ -108,7 +108,11 @@ public class BongariGUIController implements Initializable {
      * Tietojen tallennus
      */
     private void tallenna() {
-        Dialogs.showMessageDialog("Tallennetetaan! Mutta ei toimi vielä");
+        try {
+            kerho.tallenna();
+        } catch (ExceptionHandler ex) {
+            Dialogs.showMessageDialog("Tallennuksessa ongelmia! " + ex.getMessage());
+        }
     }
     
   //===========================================================================================    

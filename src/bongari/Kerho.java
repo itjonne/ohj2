@@ -80,7 +80,27 @@ public class Kerho {
         List<String> rivit = bongaukset.lueTiedostosta();
         bongaukset.lisaaTietorakenteeseen(rivit);
     }
-    
+     
+    /**
+     * Tallentaa bongarikerhon tiedot tiedostoon.  
+     * @throws ExceptionHandler jos tallettamisessa ongelmia
+     */
+    public void tallenna() throws ExceptionHandler {
+        String virhe = "";
+        try {
+            jasenet.tallenna();
+        } catch ( ExceptionHandler ex ) {
+            virhe = ex.getMessage();
+        }
+
+        try {
+            bongaukset.tallenna();
+        } catch ( ExceptionHandler ex ) {
+            virhe += ex.getMessage();
+        }
+        if ( !"".equals(virhe) ) throw new ExceptionHandler(virhe);
+    }
+   
     /**
      * Hakee jäsenen bongaamat otukset
      * @param jasenId jäsenen id, jonka tietoja haetaan

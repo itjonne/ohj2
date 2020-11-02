@@ -1,5 +1,10 @@
 package bongari;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -17,7 +22,7 @@ import kanta.TiedostostaLuettava;
  */
 public class Bongaukset extends TiedostostaLuettava {
     private final List<Bongaus> alkiot = new ArrayList<Bongaus>();
-
+    private boolean muutettu = false;
     /**
      * Lisää bongauksen tietorakenteeseen
      * @param bongaus lisättävä bongaus
@@ -32,6 +37,7 @@ public class Bongaukset extends TiedostostaLuettava {
      */
     public void lisaa(Bongaus bongaus) {
         this.alkiot.add(bongaus);
+        muutettu = true;
     }
     
     /**
@@ -78,10 +84,43 @@ public class Bongaukset extends TiedostostaLuettava {
             Bongaus bongaus = itr.next();
             if ( bongaus.getBongausId() == bongausId) {
                 itr.remove();
+                muutettu = true;
                 return true;
             }
         }
         return false;
+    }
+    
+    /**
+     * Tallentaa tiedostoon haluttuun paikkaan
+     * @throws ExceptionHandler Jos joku menee rikki
+     */
+    public void tallenna() throws ExceptionHandler {
+        if (!muutettu) return;
+        
+        File fbak = new File(getBakNimi());
+        File ftied = new File(getTiedostonNimi());
+        fbak.delete(); // if .. System.err.println("Ei voi tuhota");
+        ftied.renameTo(fbak); // if .. System.err.println("Ei voi nimetä");
+
+        try ( PrintWriter fo = new PrintWriter(new FileWriter(ftied.getCanonicalPath())) ) {
+            fo.println(";Luontobongaajien kerho ry");
+            fo.println(";Kenttien jÃ¤rjestys tiedostossa on seuraava:");
+            fo.println(";id|etunimi|sukunimi");
+            for (Bongaus bongaus : alkiot) {
+                if (bongaus != null) {                    
+                    fo.println(bongaus.toString());
+                }
+            }
+            //} catch ( IOException e ) { // ei heitä poikkeusta
+            //  throw new SailoException("Tallettamisessa ongelmia: " + e.getMessage());
+        } catch ( FileNotFoundException ex ) {
+            throw new ExceptionHandler("Tiedosto " + ftied.getName() + " ei aukea");
+        } catch ( IOException ex ) {
+            throw new ExceptionHandler("Tiedoston " + ftied.getName() + " kirjoittamisessa ongelmia");
+        }
+
+        muutettu = false;
     }
     
     /**
@@ -108,6 +147,7 @@ public class Bongaukset extends TiedostostaLuettava {
                 alkiot.set(i, bongaus);
             }
         }
+        muutettu = true;
     }
     
     /**
@@ -188,6 +228,7 @@ public class Bongaukset extends TiedostostaLuettava {
             bongaus.parse(rivi);
             lisaa(bongaus);
         }
+        muutettu = true;
     }
      
     /**
