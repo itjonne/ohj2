@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -41,8 +42,11 @@ public class Jasenet {
      * </pre>
      */
     public void lisaa(Jasen jasen) {
-        if (lkm >= MAX_JASENET) {
-            throw new Error("Meni rikki");
+        if (lkm >= alkiot.length) {
+            alkiot = Arrays.copyOf(alkiot, lkm + 10);
+            alkiot[lkm] = jasen;
+            lkm++;
+            muutettu = true;
         }
         alkiot[lkm] = jasen;
         lkm++;

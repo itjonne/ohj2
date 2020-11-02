@@ -60,7 +60,7 @@ public class BongariGUIController implements Initializable {
         Boolean vastaus = Dialogs.showQuestionDialog("Poista jäsen", "Haluatko varmasti poistaa valitun jäsenen?", "Kyllä", "Ei");
         if (vastaus == true) {
         kerho.poista(jasenKohdalla);
-        paivita();
+        paivita(0);
         } else {
             return;
         }
@@ -147,7 +147,7 @@ public class BongariGUIController implements Initializable {
         if (uusiJasen == null) return;
         uusiJasen.rekisteroi();
         kerho.lisaa(uusiJasen);
-        paivita();
+        paivita(0);
     }
     
     private void naytaJasen() {
@@ -166,13 +166,13 @@ public class BongariGUIController implements Initializable {
         if (muokattuJasen == null) return;
         // Jos kaikki kunnossa, muokataan.
         kerho.muokkaa(muokattuJasen);
-        paivita();
+        paivita(jasenLista.getSelectedIndex());
         } catch (CloneNotSupportedException e) {
             Dialogs.showMessageDialog(e.getMessage());
         }       
     }
     
-    private void paivita() {
+    private void paivita(int valittu) {
         jasenLista.clear();
         jasenLista.addSelectionListener(e -> naytaJasen());
         List<Jasen> jasenet = kerho.etsiJasenet("");
@@ -181,7 +181,7 @@ public class BongariGUIController implements Initializable {
                 if (jasen != null) jasenLista.add(jasen.getEtunimi(), jasen);           
                 }
             // Jos on jäsenistöä, valittuna on ensimmäinen.
-            jasenLista.setSelectedIndex(0);
+            jasenLista.setSelectedIndex(valittu);
         } else {
             jasenLista.add("Ei jäseniä", new Jasen());
             }
@@ -226,7 +226,7 @@ public class BongariGUIController implements Initializable {
         uusiBongaus.setJasenId(jasenLista.getSelectedObject().getJasenId());
         uusiBongaus.rekisteroi();
         kerho.lisaa(uusiBongaus);
-        paivita();
+        paivita(jasenLista.getSelectedIndex());
     }
     
     private void naytaBongaus() {
@@ -249,7 +249,7 @@ public class BongariGUIController implements Initializable {
             muokattuBongaus.setPvm(bongauksenTiedotPvm.getText());
             muokattuBongaus.setTietoja(bongauksenTiedotLisatietoja.getText());
             kerho.muokkaa(muokattuBongaus);
-            paivita();
+            paivita(jasenLista.getSelectedIndex());
         } catch (CloneNotSupportedException e) {   
             Dialogs.showMessageDialog(e.getMessage());
         }    
