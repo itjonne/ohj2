@@ -33,7 +33,7 @@
             <TextField fx:id="kaupunkiTextInput" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <DatePicker fx:id="pvmDatePicker" GridPane.columnIndex="1" GridPane.rowIndex="2" />
             <TextArea fx:id="lisatietojaTextArea" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-            <ListChooser fx:id="lajiListChooser" GridPane.columnIndex="1" />
+            <ListChooser fx:id="lajiListChooser" prefHeight="600.0" GridPane.columnIndex="1" GridPane.vgrow="ALWAYS" />
          </children>
       </GridPane>
    </center>
@@ -41,10 +41,10 @@
       <Label text="Lisää uusi bongaus" BorderPane.alignment="CENTER" />
    </top>
    <bottom>
-      <Pane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+      <Pane prefHeight="38.0" prefWidth="600.0" BorderPane.alignment="CENTER">
          <children>
-            <Button layoutX="41.0" layoutY="130.0" mnemonicParsing="false" onAction="#handleLisaa" text="Lisää" />
-            <Button layoutX="150.0" layoutY="130.0" mnemonicParsing="false" onAction="#handleKumoa" text="Kumoa" />
+            <Button layoutX="14.0" layoutY="7.0" mnemonicParsing="false" onAction="#handleLisaa" text="Lisää" />
+            <Button layoutX="72.0" layoutY="7.0" mnemonicParsing="false" onAction="#handleKumoa" text="Kumoa" />
          </children>
       </Pane>
    </bottom>

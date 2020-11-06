@@ -22,13 +22,13 @@
         <menus>
           <Menu mnemonicParsing="false" text="_Tiedosto">
             <items>
-              <MenuItem mnemonicParsing="false" onAction="#handleLopeta" text="Lopeta" />
+              <MenuItem mnemonicParsing="false" onAction="#handleTallenna" text="Tallenna" />
+                  <MenuItem mnemonicParsing="false" onAction="#handleLopeta" text="Lopeta" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="_Muokkaa">
             <items>
-                  <MenuItem mnemonicParsing="false" onAction="#handleMuokkaajasen" text="Muokkaa" />
-              <MenuItem mnemonicParsing="false" text="Poista" />
+                  <MenuItem mnemonicParsing="false" onAction="#handleMuokkaajasen" text="Muokkaa Jäsentä" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="_Apua">

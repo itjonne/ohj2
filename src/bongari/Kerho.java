@@ -180,6 +180,13 @@ public class Kerho {
         return loydetytBongaukset;
     }
     
+    public void poistaJasenenBongaukset(int jasenId) {
+        List<Bongaus> jasenenBongaukset = haeJasenenBongaukset(jasenId);
+        for (Bongaus bongaus : jasenenBongaukset) {
+            poista(bongaus);
+        }
+    }
+    
     /**
      * Hakee bongattavan otuksen löytäneet jäsenet.
      * @param bongattavaId bongattavan id, jonka löytäneitä jäseniä haetaan

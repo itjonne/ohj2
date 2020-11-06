@@ -3,6 +3,8 @@ package fxBongari;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import fi.jyu.mit.fxgui.Dialogs;
 import fi.jyu.mit.fxgui.ListChooser;
@@ -49,16 +51,23 @@ public class BongariGUIController implements Initializable {
         uusiJasen();
     }
     
+    /**
+     * Käsitellään jäsenen muokkauskäsky
+     */
     @FXML private void handleMuokkaajasen() {
         muokkaaJasen();
         // ModalController.showModal(BongariGUIController.class.getResource("JasenMuokkaaDialogView.fxml"), "Muokkaa", null, new Jasen());
     }
     
+    /**
+     * Käsitellään jäsenen poistamiskäsky
+     */
     @FXML private void handlePoistaJasen() {
         Jasen jasenKohdalla = jasenLista.getSelectedObject();
         if (jasenKohdalla == null) return;
         Boolean vastaus = Dialogs.showQuestionDialog("Poista jäsen", "Haluatko varmasti poistaa valitun jäsenen?", "Kyllä", "Ei");
         if (vastaus == true) {
+        kerho.poistaJasenenBongaukset(jasenKohdalla.getJasenId());
         kerho.poista(jasenKohdalla);
         paivita(0);
         } else {
@@ -81,10 +90,17 @@ public class BongariGUIController implements Initializable {
     }
     
     /**
-     * Käsitellään tallennuskäsky
+     * Käsitellään bongauksen muokkauskäsky
      */
     @FXML private void handleMuokkaaBongaus() {
         muokkaaBongaus();
+    }
+    
+    /**
+     * Käsitellään tallennuskäsky
+     */
+    @FXML private void handleTallenna() {
+        tallenna();
     }
     
     /**
@@ -246,6 +262,9 @@ public class BongariGUIController implements Initializable {
         if (bongauksenTiedotKaupunki.getText().trim().contentEquals("") || bongauksenTiedotPvm.getText().trim().contentEquals("")) {
             Dialogs.showMessageDialog("Bongauksen tiedot eivät saa olla tyhjiä");
         }
+        if (onkoValidiPvm(bongauksenTiedotPvm.getText()) == false) {
+            Dialogs.showMessageDialog("Päivämäärän täytyy olla muotoa dd/mm/yyyy");
+        }
         Bongaus muokattuBongaus;
         try {
             muokattuBongaus = bongausKohdalla.clone();
@@ -268,8 +287,7 @@ public class BongariGUIController implements Initializable {
         paivita(jasenLista.getSelectedIndex());
         } else {
             return;
-        }
-        
+        }      
     }
     
     private void naytaBongauksenTiedot(Bongaus bongaus) {
@@ -292,5 +310,11 @@ public class BongariGUIController implements Initializable {
         bongauksenTiedotPvm.setText(bongaus.getPvm());
         bongauksenTiedotKaupunki.setText(bongaus.getKaupunki());
         bongauksenTiedotLisatietoja.setText(bongaus.getTietoja());
+    }
+    
+    private boolean onkoValidiPvm(String pvm) {
+        Pattern pattern = Pattern.compile("\\d\\d[/]\\d\\d[/]\\d\\d\\d\\d");
+        Matcher matcher = pattern.matcher(pvm);
+        return matcher.find();
     }
 }

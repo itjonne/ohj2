@@ -1,10 +1,9 @@
 # HT Vaihe 4/5
 
-Osataan lukea tiedostosta.
-Ei vielä tallennustoimintoja.
+Osataan lukea tiedostosta + Tallentaa.
 
 Osataan lisätä/muokata/poistaa jäseniä
-Osataan muokata ja lisätä bongauksia.
+Osataan muokata/lisätä/poistaa bongauksia.
 
 Bongausikkuna valmis(ulkoasua vähän joutuu hiomaan), toiminnot puuttuvat.
 
@@ -17,5 +16,5 @@ Bongausikkuna valmis(ulkoasua vähän joutuu hiomaan), toiminnot puuttuvat.
 - Loput comtestit
 - ~~Tiedostoon tallennus~~
 - ~~Bongauksen poisto~~
-- Bongauksen muokkauksessa validointi
+- ~~Bongauksen muokkauksessa validointi~~
 - ~~Bongauksen lisäyksen yhteydessä pidä entinen valittu jäsen~~
