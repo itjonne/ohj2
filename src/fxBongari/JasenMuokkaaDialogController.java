@@ -31,8 +31,8 @@ public class JasenMuokkaaDialogController implements ModalControllerInterface<Ja
             Dialogs.showMessageDialog("Nimi ei saa olla tyhjä");
             return;
         }
-        this.jasenKohdalla.setEtunimi(textFieldEtunimi.getText());
-        this.jasenKohdalla.setSukunimi(textFieldSukunimi.getText());
+        this.jasenKohdalla.setEtunimi(textFieldEtunimi.getText().trim());
+        this.jasenKohdalla.setSukunimi(textFieldSukunimi.getText().trim());
         ModalController.closeStage(textFieldEtunimi);
     }
 

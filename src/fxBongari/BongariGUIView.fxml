@@ -54,7 +54,7 @@
                      <HBox.margin>
                         <Insets right="10.0" />
                      </HBox.margin></Button>
-                  <Button mnemonicParsing="false" onAction="#handlePoistaJasen" text="Poista Jäsen" />
+                  <Button fx:id="buttonPoistaJasen" mnemonicParsing="false" onAction="#handlePoistaJasen" text="Poista Jäsen" />
                </children>
             </HBox>
          </bottom>
@@ -75,7 +75,7 @@
                      <HBox.margin>
                         <Insets right="10.0" />
                      </HBox.margin></Button>
-                  <Button mnemonicParsing="false" onAction="#handlePoistaBongaus" text="Poista Bongaus" />
+                  <Button fx:id="buttonPoistaBongaus" mnemonicParsing="false" onAction="#handlePoistaBongaus" text="Poista Bongaus" />
                </children>
             </HBox>
          </bottom>
@@ -149,7 +149,7 @@
                <bottom>
                   <HBox>
                      <children>
-                        <Button mnemonicParsing="false" onAction="#handleMuokkaaBongaus" text="Muokkaa Bongausta" />
+                        <Button fx:id="buttonMuokkaaBongaus" mnemonicParsing="false" onAction="#handleMuokkaaBongaus" text="Muokkaa Bongausta" />
                      </children>
                   </HBox>
                </bottom>

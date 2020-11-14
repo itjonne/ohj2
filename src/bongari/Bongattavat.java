@@ -5,7 +5,6 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 
@@ -18,7 +17,6 @@ public class Bongattavat {
     private HashMap<Integer, Bongattava> alkiot = new HashMap<Integer, Bongattava>();
     private String tiedostonPerusNimi = "linnut";
     private int lkm = 0;
-    private boolean muutettu = false;
     
     /**
      * Palauttaa alkioiden lukumäärän
@@ -38,7 +36,6 @@ public class Bongattavat {
     
     /**
      * Palauttaa kaikki tietorakenteesta löytyvät alkiot
-     * TODO: Tarvitaanko?
      * @return kaikki alkiot
      * @example
      * <pre name="test">
@@ -107,14 +104,6 @@ public class Bongattavat {
     }
     
     /**
-     * @param id haettavan alkion id
-     * @return bongattavan otuksen
-     */
-    public Bongattava etsiId(int id) {
-        return alkiot.get(id);
-    }
-    
-    /**
      * @param id haettavan olion id
      * @return palauttaa id:llä haettavan olion, jos ei löydy niin null
      * @example
@@ -136,6 +125,17 @@ public class Bongattavat {
     /**
      * @param tied tiedoston nimi
      * @throws ExceptionHandler jos joku menee pieleen, heitetään oma exceptioni
+     * <pre name="test">
+     * #THROWS ExceptionHandler 
+     * #import java.io.File;
+     * 
+     *  Bongattavat bongattavat = new Bongattavat();
+     *  String hakemisto = "data/testikerho/";
+     *  bongattavat.lueTiedostosta(hakemisto + "linnt"); #THROWS ExceptionHandler
+     *  bongattavat = new Bongattavat();            // Poistetaan vanhat luomalla uusi
+     *  bongattavat.lueTiedostosta(hakemisto + "linnut");  // johon ladataan tiedot tiedostosta.
+     *  bongattavat.getAlkiot().size() === 257; 
+     * </pre>
      */
     public void lueTiedostosta(String tied) throws ExceptionHandler {
         setTiedostonPerusNimi(tied);
@@ -149,8 +149,6 @@ public class Bongattavat {
                 bongattava.parse(rivi); // voisi olla virhekäsittely
                 lisaa(bongattava);
             }
-            muutettu = false;
-
         } catch ( FileNotFoundException e ) {
             throw new ExceptionHandler("Tiedosto " + getTiedostonNimi() + " ei aukea");
         } catch ( IOException e ) {

@@ -13,7 +13,6 @@ import java.util.List;
 
 /**
  * Bongarikerhon jäsenistö
- * TODO: Yli viiden jäsenen lisääminen ei vielä toimi
  * 
  * @author Jonne
  * @version 2 Sep 2020
@@ -90,7 +89,6 @@ public class Jasenet {
     
     /**
      * Muokkaa tietorakenteessa olevan jäsenen tietoja.
-     * TODO: Jos yrittää muokata olemattoman tyypin tietoja
      * @param jasen Jäsen, jonka tietoja muokataan
      * @example
      * <pre name="test">
@@ -247,6 +245,21 @@ public class Jasenet {
     /**
      * @param tied tiedoston nimi
      * @throws ExceptionHandler jos joku menee pieleen, heitetään oma exceptioni
+     * <pre name="test">
+     * #THROWS ExceptionHandler 
+     * #import java.io.File;
+     * 
+     * Jasenet jasenet = new Jasenet();
+     * String hakemisto = "data/testikerho/";
+     * jasenet.lueTiedostosta(hakemisto + "jasent"); #THROWS ExceptionHandler
+     * jasenet = new Jasenet();            // Poistetaan vanhat luomalla uusi
+     * jasenet.lueTiedostosta(hakemisto + "jasenet");  // johon ladataan tiedot tiedostosta.
+     * Jasen jasen = jasenet.annaId(1);
+     * jasen.getEtunimi() === "Testi";
+     * jasen.getSukunimi() === "Testaaja";
+     * jasen.getJasenId() === 1;
+     * </pre>
+     *
      */
     public void lueTiedostosta(String tied) throws ExceptionHandler {
         setTiedostonPerusNimi(tied);
@@ -285,7 +298,6 @@ public class Jasenet {
         tiedostonPerusNimi = tied;
     }
 
-
     /**
      * Palauttaa tiedoston nimen, jota käytetään tallennukseen
      * @return tallennustiedoston nimi
@@ -302,7 +314,6 @@ public class Jasenet {
     public String getTiedostonNimi() {
         return tiedostonPerusNimi + ".dat";
     }
-
 
     /**
      * Palauttaa varakopiotiedoston nimen
@@ -321,26 +332,31 @@ public class Jasenet {
         
         File fbak = new File(getBakNimi());
         File ftied = new File(getTiedostonNimi());
-        fbak.delete(); // if .. System.err.println("Ei voi tuhota");
-        ftied.renameTo(fbak); // if .. System.err.println("Ei voi nimetä");
+   
+        boolean onnistuikoPoisto = fbak.delete();
+        if (!onnistuikoPoisto) {
+            throw new ExceptionHandler("Varmuuskopion poistamisen kanssa ongelmia");
+        }
 
+        boolean onnistuikoVarmuuskopiointi = ftied.renameTo(fbak);
+        if (!onnistuikoVarmuuskopiointi) {
+            throw new ExceptionHandler("Varmuuskopion tallentamisen kanssa ongelmia");
+        }
+        
         try ( PrintWriter fo = new PrintWriter(new FileWriter(ftied.getCanonicalPath())) ) {
             fo.println(";Luontobongaajien kerho ry");
-            fo.println(";Kenttien jÃ¤rjestys tiedostossa on seuraava:");
+            fo.println(";Kenttien järjestys tiedostossa on seuraava:");
             fo.println(";id|etunimi|sukunimi");
             for (Jasen jasen : alkiot) {
                 if (jasen != null) {                    
                     fo.println(jasen.toString());
                 }
-            }
-            //} catch ( IOException e ) { // ei heitä poikkeusta
-            //  throw new SailoException("Tallettamisessa ongelmia: " + e.getMessage());
+            }          
         } catch ( FileNotFoundException ex ) {
             throw new ExceptionHandler("Tiedosto " + ftied.getName() + " ei aukea");
         } catch ( IOException ex ) {
             throw new ExceptionHandler("Tiedoston " + ftied.getName() + " kirjoittamisessa ongelmia");
         }
-
         muutettu = false;
     }
     
@@ -394,13 +410,5 @@ public class Jasenet {
         aku2.setSukunimi("Ankka");
         jasenet.lisaa(aku);
         jasenet.lisaa(aku2);
-        
-        try {            
-            System.out.println(jasenet.alkiot[0].getKokonimi());
-            System.out.println(jasenet.alkiot[1].getKokonimi());
-            System.out.println(jasenet.alkiot[2].getKokonimi());
-        } catch (Exception e) {
-            throw new ExceptionHandler(e.getMessage());
-        }
     }
 }

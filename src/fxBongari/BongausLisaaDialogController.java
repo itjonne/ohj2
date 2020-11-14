@@ -1,6 +1,7 @@
 package fxBongari;
 
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -83,7 +84,9 @@ public class BongausLisaaDialogController implements ModalControllerInterface<Bo
     public void alusta() {
         List<Bongattava> bongattavat = uusiBongaus.getBongattavat();
         for (Bongattava bongattava : bongattavat) {
-            lajiListChooser.add(bongattava.getNimi(), bongattava);
+            String nimi = bongattava.getNimi();
+            byte[] bytes = nimi.getBytes(StandardCharsets.UTF_8);
+            lajiListChooser.add(new String(bytes, StandardCharsets.UTF_8), bongattava);
         }
         lajiListChooser.setSelectedIndex(0);
     }

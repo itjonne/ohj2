@@ -243,7 +243,5 @@ public class Bongattava {
         olio.setHeimo("Käet");
         olio.setLaji("Lintu");
         olio.tulosta(System.out);
-    }
-
-    
+    } 
 }

@@ -12,6 +12,7 @@ import fi.jyu.mit.fxgui.ModalController;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
@@ -39,10 +40,13 @@ public class BongariGUIController implements Initializable {
     @FXML private TextField bongauksenTiedotPvm;
     @FXML private TextField bongauksenTiedotKaupunki;
     @FXML private TextArea bongauksenTiedotLisatietoja;
+    @FXML private Button buttonMuokkaaBongaus;
+    @FXML private Button buttonPoistaBongaus;
+    @FXML private Button buttonPoistaJasen;
 
     @Override
     public void initialize(URL url, ResourceBundle bundle) {
-        alusta();      
+        //alusta();      
     }
     /**
      * Käsitellään uuden jäsenen lisääminen
@@ -134,31 +138,52 @@ public class BongariGUIController implements Initializable {
   //===========================================================================================    
   // Tästä eteenpäin ei käyttöliittymään suoraan liittyvää koodia
     
-    private Kerho kerho = new Kerho();
+    private Kerho kerho;
     
+    /**
+     * @param kerho Kerho, jota käytetään
+     */
     public void setKerho(Kerho kerho) {
         this.kerho = kerho;
-        naytaJasen();
     }
     
     private void alusta() {
-        try {
-            kerho.lueKansiosta("data");
-            jasenLista.clear();
-            jasenLista.addSelectionListener(e -> naytaJasen());
-            List<Jasen> jasenet = kerho.etsiJasenet("");
-            if (!jasenet.isEmpty()) {
-                for (Jasen jasen : jasenet) {
-                    if (jasen != null) jasenLista.add(jasen.getEtunimi(), jasen);           
-                    }
-                // Jos on jäsenistöä, valittuna on ensimmäinen.
-                jasenLista.setSelectedIndex(0);
-            } else {
-                jasenLista.add("Ei jäseniä", new Jasen());
+        jasenLista.clear();       
+        jasenLista.addSelectionListener(e -> naytaJasen());
+        bongauksetLista.clear();
+        List<Jasen> jasenet = kerho.etsiJasenet("");
+        if (!jasenet.isEmpty()) {
+            for (Jasen jasen : jasenet) {
+                if (jasen != null) jasenLista.add(jasen.getKokonimi(), jasen);           
                 }
+            // Jos on jäsenistöä, valittuna on ensimmäinen.
+            jasenLista.setSelectedIndex(0);
+        } else {
+            jasenLista.add("Ei jäseniä", new Jasen());
+            }                    
+    }
+    
+    /**
+     * @param nimi kansion nimi josta luetaan
+     */
+    public void lueKansio(String nimi) {
+        try {
+            kerho.lueKansiosta("data/" + nimi);
+            alusta();
         } catch (ExceptionHandler e) {
-            System.out.println(e);
-        }      
+            Dialogs.showMessageDialog("Ei löytynyt kansiota nimellä: " + nimi);
+            boolean onnistuiko = avaa();
+            if (!onnistuiko) Platform.exit();
+        }
+    }
+    
+    /**
+     * @return true jos avaaminen onnistui, muuten false
+     */
+    public boolean avaa() {
+        String vastaus = Dialogs.showInputDialog("Avaa tietokannan kansio", "kerho");
+        if (vastaus != null) lueKansio(vastaus);
+        return vastaus != null ? true : false;
     }
     
     private void uusiJasen() {
@@ -177,8 +202,11 @@ public class BongariGUIController implements Initializable {
     }
     
     private void muokkaaJasen() {
-        Jasen jasenKohdalla = jasenLista.getSelectedObject();       
-        if (jasenKohdalla == null) return;
+        Jasen jasenKohdalla = jasenLista.getSelectedObject();    
+        if (jasenKohdalla.getJasenId() == 0) {
+            Dialogs.showMessageDialog("Lisää ensin jäseniä");
+            return;
+        }
         
         Jasen muokattuJasen;
         try {
@@ -197,13 +225,15 @@ public class BongariGUIController implements Initializable {
         jasenLista.addSelectionListener(e -> naytaJasen());
         List<Jasen> jasenet = kerho.etsiJasenet("");
         if (!jasenet.isEmpty()) {
+            buttonPoistaJasen.setDisable(false);
             for (Jasen jasen : jasenet) {
-                if (jasen != null) jasenLista.add(jasen.getEtunimi(), jasen);           
+                if (jasen != null) jasenLista.add(jasen.getKokonimi(), jasen);           
                 }
             // Jos on jäsenistöä, valittuna on ensimmäinen.
             jasenLista.setSelectedIndex(valittu);
         } else {
             jasenLista.add("Ei jäseniä", new Jasen());
+            buttonPoistaJasen.setDisable(true);         
             }
     }
     
@@ -214,6 +244,11 @@ public class BongariGUIController implements Initializable {
         
         List<Bongaus> bongaukset = kerho.haeJasenenBongaukset(jasen.getJasenId());
         if (!bongaukset.isEmpty()) {
+            bongauksenTiedotPvm.setDisable(false);
+            bongauksenTiedotKaupunki.setDisable(false);
+            bongauksenTiedotLisatietoja.setDisable(false);
+            buttonMuokkaaBongaus.setDisable(false);
+            buttonPoistaBongaus.setDisable(false);
             for (Bongaus bongaus : bongaukset) {
                 Bongattava bongattava = kerho.etsiBongattavatId(bongaus.getBongattavaId());
                 bongauksetLista.add(bongattava.getNimi(), bongaus);
@@ -224,6 +259,11 @@ public class BongariGUIController implements Initializable {
             bongaus.setTietoja("tyhja");
             bongauksetLista.add("Käyttäjällä ei ole vielä bongauksia", bongaus);
             bongauksetLista.setSelectedIndex(0);
+            bongauksenTiedotPvm.setDisable(true);
+            bongauksenTiedotKaupunki.setDisable(true);
+            bongauksenTiedotLisatietoja.setDisable(true);
+            buttonMuokkaaBongaus.setDisable(true);
+            buttonPoistaBongaus.setDisable(true);
         }
     }
     
@@ -237,6 +277,8 @@ public class BongariGUIController implements Initializable {
         List<Bongattava> bongattavat = kerho.etsiBongattavat("");
         uusiBongausTietue.setBongattavat(bongattavat);
         uusiBongausTietue = BongausLisaaDialogController.kysyBongaus(null, uusiBongausTietue);
+        
+        if (uusiBongausTietue == null) return;
         
         Bongaus uusiBongaus = new Bongaus();
         uusiBongaus.setBongattavaId(uusiBongausTietue.getBongattavaId());

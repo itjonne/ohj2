@@ -31,8 +31,8 @@ public class JasenLisaaDialogController implements ModalControllerInterface<Jase
             Dialogs.showMessageDialog("Nimi ei saa olla tyhjä");
             return;
         }
-        this.uusiJasen.setEtunimi(textFieldEtunimi.getText());
-        this.uusiJasen.setSukunimi(textFieldSukunimi.getText());
+        this.uusiJasen.setEtunimi(textFieldEtunimi.getText().trim());
+        this.uusiJasen.setSukunimi(textFieldSukunimi.getText().trim());
         ModalController.closeStage(textFieldEtunimi);
     }
 

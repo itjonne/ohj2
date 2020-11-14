@@ -10,23 +10,60 @@ import java.util.List;
  *
  */
 public class Kerho {
-    // Bongattavat tehty omalla luokkarakenteella.
     private Bongattavat bongattavat = new Bongattavat();
     private Jasenet jasenet = new Jasenet();
     private Bongaukset bongaukset = new Bongaukset();
     
+    /**
+     * Lisää jäsenen tietorakenteeseen
+     * @param jasen tietorakenteeseen lisättävä jäsen
+     * @example
+     * <pre name="test">
+     * Kerho kerho = new Kerho();
+     * Jasen jasen = new Jasen();
+     * jasen.setEtunimi("Aku");
+     * jasen.setSukunimi("Ankka");
+     * kerho.lisaa(jasen);
+     * kerho.etsiJasenet("Aku").size() === 1;
+     * </pre>
+     */
     public void lisaa(Jasen jasen) {
         jasenet.lisaa(jasen);
     }
     
+    /**
+     * Lisää uuden bongauksen tietorakenteeseen.
+     * @param bongaus lisättävä bongaus
+     * @example
+     * <pre name="test">
+     * Kerho kerho = new Kerho();
+     * Jasen jasen = new Jasen();
+     * jasen.setEtunimi("Aku");
+     * jasen.setSukunimi("Ankka");
+     * jasen.setJasenId(1);
+     * Bongaus bongaus = new Bongaus();
+     * bongaus.setJasenId(1);
+     * kerho.lisaa(jasen);
+     * kerho.lisaa(bongaus);
+     * kerho.haeJasenenBongaukset(jasen.getJasenId()).size() === 1;
+     * </pre>
+     */
     public void lisaa(Bongaus bongaus) {
         bongaukset.lisaa(bongaus);
     }
     
+    /**
+     * Muokkaa valittua jäsentä.
+     * @param jasen muokattava jäsen
+     */
     public void muokkaa(Jasen jasen) {
         jasenet.muokkaa(jasen);
     }
     
+    /**
+     * Muokkaa valittua bongausta.
+     * @param bongaus muokattava bongaus
+     */
     public void muokkaa(Bongaus bongaus) {
         bongaukset.muokkaa(bongaus);
     }
@@ -52,7 +89,7 @@ public class Kerho {
      * @return bongattava otus
      */
     public Bongattava etsiBongattavatId(int id) {
-        return bongattavat.etsiId(id);
+        return bongattavat.anna(id);
     }
      
     /**

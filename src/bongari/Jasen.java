@@ -92,8 +92,8 @@ public class Jasen implements Cloneable {
      * testi.rekisteroi();
      * Jasen testi2 = new Jasen();
      * testi2.rekisteroi();
-     * testi.getJasenId() === 1;
-     * testi2.getJasenId() === 2;
+     * testi.getJasenId() === 3;
+     * testi2.getJasenId() === 4;
      * </pre>
      */
     public int rekisteroi() {
@@ -166,25 +166,24 @@ public class Jasen implements Cloneable {
     }
     
     /**
-     * 
      * @example
      * <pre name="test">
      * Jasen jasen = new Jasen();
      * jasen.setJasenId(1);
      * jasen.setEtunimi("Aku");
      * jasen.setSukunimi("Ankka");
-     * jasen.toString() === "1|Aku|Ankka;";
+     * jasen.toString() === "1|Aku|Ankka";
      * Jasen jasen2 = new Jasen();
      * jasen2.setJasenId(2);
      * jasen2.setEtunimi("Roope");
      * jasen2.setSukunimi("Setä");
-     * jasen2.toString() === "2|Roope|Setä;";
+     * jasen2.toString() === "2|Roope|Setä";
      * 
      * </pre>
      */
     @Override
     public String toString() {
-        return String.format("%d|%s|%s;", getJasenId(), getEtunimi(), getSukunimi()); 
+        return String.format("%d|%s|%s", getJasenId(), getEtunimi(), getSukunimi()); 
     }
     
 }

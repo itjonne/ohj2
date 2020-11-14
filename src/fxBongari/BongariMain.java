@@ -20,24 +20,30 @@ public class BongariMain extends Application {
 	public void start(Stage primaryStage) {
 		try {
 		    final FXMLLoader ldr = new FXMLLoader(getClass().getResource("BongariGUIView.fxml"));
-		    final BongariGUIController bongariCtrl = (BongariGUIController)ldr.getController();
-            /*
-		    Kerho kerho = new Kerho();
-            bongariCtrl.setKerho(kerho);
-		    */
 		    final Pane root = (Pane)ldr.load();
-            
-            final Scene scene = new Scene(root);
-            scene.getStylesheets().add(getClass().getResource("bongari.css").toExternalForm());
-            primaryStage.setScene(scene);
-            primaryStage.setTitle("Bongari");
-            
+		    final BongariGUIController bongariCtrl = (BongariGUIController)ldr.getController();
+
+		    Kerho kerho = new Kerho();
+		    bongariCtrl.setKerho(kerho);
+
+		    final Scene scene = new Scene(root);
+		    scene.getStylesheets().add(getClass().getResource("bongari.css").toExternalForm());
+		    primaryStage.setScene(scene);
+		    primaryStage.setTitle("Lintubongareiden kerho");
+            		    		    
             primaryStage.setOnCloseRequest((event) -> {
                 // Kutsutaan voikoSulkea-metodia
                 if ( !bongariCtrl.voikoSulkea() ) event.consume(); 
             });
-
+            
+            
 			primaryStage.show();
+			
+            Application.Parameters params = getParameters(); 
+            if ( params.getRaw().size() > 0 ) 
+                bongariCtrl.lueKansio(params.getRaw().get(0));  
+            else
+                if ( !bongariCtrl.avaa() ) Platform.exit();
 		} catch(Exception e) {
 			e.printStackTrace();
 		}

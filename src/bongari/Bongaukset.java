@@ -60,7 +60,6 @@ public class Bongaukset extends TiedostostaLuettava {
     }
     
     /**
-     * TODO: Voiko iteraattori hajota?!?!
      * Poistaa bongauksen id-numeron perusteella
      * @param bongausId poistettavan bongauksen id
      * @return true jos poisto onnistui, muuten false
@@ -100,20 +99,26 @@ public class Bongaukset extends TiedostostaLuettava {
         
         File fbak = new File(getBakNimi());
         File ftied = new File(getTiedostonNimi());
-        fbak.delete(); // if .. System.err.println("Ei voi tuhota");
-        ftied.renameTo(fbak); // if .. System.err.println("Ei voi nimetä");
+        
+        boolean onnistuikoPoisto = fbak.delete();
+        if (!onnistuikoPoisto) {
+            throw new ExceptionHandler("Varmuuskopion poistamisen kanssa ongelmia");
+        }
+
+        boolean onnistuikoVarmuuskopiointi = ftied.renameTo(fbak);
+        if (!onnistuikoVarmuuskopiointi) {
+            throw new ExceptionHandler("Varmuuskopion tallentamisen kanssa ongelmia");
+        }
 
         try ( PrintWriter fo = new PrintWriter(new FileWriter(ftied.getCanonicalPath())) ) {
             fo.println(";Luontobongaajien kerho ry");
-            fo.println(";Kenttien jÃ¤rjestys tiedostossa on seuraava:");
-            fo.println(";id|etunimi|sukunimi");
+            fo.println(";Kenttien järjestys tiedostossa on seuraava:");
+            fo.println(";BongausId|JasenId|BongattavaId|Pvm|Lisätietoja");
             for (Bongaus bongaus : alkiot) {
                 if (bongaus != null) {                    
                     fo.println(bongaus.toString());
                 }
             }
-            //} catch ( IOException e ) { // ei heitä poikkeusta
-            //  throw new SailoException("Tallettamisessa ongelmia: " + e.getMessage());
         } catch ( FileNotFoundException ex ) {
             throw new ExceptionHandler("Tiedosto " + ftied.getName() + " ei aukea");
         } catch ( IOException ex ) {
@@ -152,7 +157,6 @@ public class Bongaukset extends TiedostostaLuettava {
     
     /**
      * Hakee jäsenen bongaukset jäsenen id:llä
-     * TODO: SAAKO VERRATA int == int?!
      * @param jasenId jäsenen id, jonka bongauksia haetaan
      * @return jäsenen löytämät bongaukset
      * @example

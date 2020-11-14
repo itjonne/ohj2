@@ -8,7 +8,7 @@ Osataan muokata/lisätä/poistaa bongauksia.
 Bongausikkuna valmis(ulkoasua vähän joutuu hiomaan), ~~toiminnot puuttuvat.~~
 
 ## Bugit:
-- bongauksien parsimisessa puolipiste jää loppuun
+- ~~bongauksien parsimisessa puolipiste jää loppuun~~
 
 ## TODO:
 
@@ -18,4 +18,4 @@ Bongausikkuna valmis(ulkoasua vähän joutuu hiomaan), ~~toiminnot puuttuvat.~~
 - ~~Bongauksen poisto~~
 - ~~Bongauksen muokkauksessa validointi~~
 - ~~Bongauksen lisäyksen yhteydessä pidä entinen valittu jäsen~~
-- Ohjelmaa sammutettaessa kaatuu
+- ~~Ohjelmaa sammutettaessa kaatuu~~

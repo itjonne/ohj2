@@ -2,7 +2,6 @@ package bongari;
 
 import java.io.OutputStream;
 import java.io.PrintStream;
-import java.util.List;
 
 import fi.jyu.mit.ohj2.Mjonot;
 
@@ -154,7 +153,7 @@ public class Bongaus implements Cloneable {
     
     /**
      * Asetetaan bongauksen päivämäärä
-     * @param pvm päivämäärä, jona bongaus tapahtui (TODO: muotoa dd/mm/yyyy)
+     * @param pvm päivämäärä, jona bongaus tapahtui
      * @example
      * <pre name="test">
      * Bongaus bongaus = new Bongaus();
@@ -269,6 +268,6 @@ public class Bongaus implements Cloneable {
 
     @Override
     public String toString() {
-        return String.format("%d|%d|%d|%s|%s|%s;", getBongausId(), getJasenId(), getBongattavaId(), getKaupunki(), getPvm(), getTietoja()); 
+        return String.format("%d|%d|%d|%s|%s|%s", getBongausId(), getJasenId(), getBongattavaId(), getKaupunki(), getPvm(), getTietoja()); 
     }
 }
