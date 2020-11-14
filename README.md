@@ -5,7 +5,7 @@ Osataan lukea tiedostosta + Tallentaa.
 Osataan lisätä/muokata/poistaa jäseniä
 Osataan muokata/lisätä/poistaa bongauksia.
 
-Bongausikkuna valmis(ulkoasua vähän joutuu hiomaan), toiminnot puuttuvat.
+Bongausikkuna valmis(ulkoasua vähän joutuu hiomaan), ~~toiminnot puuttuvat.~~
 
 ## Bugit:
 - bongauksien parsimisessa puolipiste jää loppuun
@@ -18,3 +18,4 @@ Bongausikkuna valmis(ulkoasua vähän joutuu hiomaan), toiminnot puuttuvat.
 - ~~Bongauksen poisto~~
 - ~~Bongauksen muokkauksessa validointi~~
 - ~~Bongauksen lisäyksen yhteydessä pidä entinen valittu jäsen~~
+- Ohjelmaa sammutettaessa kaatuu
