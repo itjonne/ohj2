@@ -1,14 +1,10 @@
 package fxBongari;
 
-import java.net.URL;
-import java.util.ResourceBundle;
-
 import bongari.Jasen;
 import fi.jyu.mit.fxgui.Dialogs;
 import fi.jyu.mit.fxgui.ModalController;
 import fi.jyu.mit.fxgui.ModalControllerInterface;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 

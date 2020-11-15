@@ -14,6 +14,7 @@
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 
 <BorderPane minHeight="400.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fxBongari.BongariGUIController">
@@ -33,7 +34,7 @@
           </Menu>
           <Menu mnemonicParsing="false" text="_Apua">
             <items>
-              <MenuItem mnemonicParsing="false" text="About" />
+              <MenuItem mnemonicParsing="false" onAction="#handleTietoja" text="Tietoja" />
             </items>
           </Menu>
         </menus>
@@ -44,9 +45,6 @@
          <top>
             <Label text="Jäsenet" BorderPane.alignment="CENTER" />
          </top>
-         <center>
-            <ListChooser fx:id="jasenLista" BorderPane.alignment="CENTER" />
-         </center>
          <bottom>
             <HBox prefWidth="200.0" BorderPane.alignment="CENTER">
                <children>
@@ -58,6 +56,14 @@
                </children>
             </HBox>
          </bottom>
+         <center>
+            <Pane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+               <children>
+                  <ListChooser fx:id="jasenLista" layoutY="25.0" maxWidth="-Infinity" prefHeight="308.0" prefWidth="201.0" />
+                  <TextField fx:id="haeJasenet" layoutX="26.0" onKeyTyped="#handleHaeJasenet" />
+               </children>
+            </Pane>
+         </center>
       </BorderPane>
    </left>
    <center>
@@ -66,12 +72,12 @@
             <Label text="Jäsenen Bongaukset" BorderPane.alignment="CENTER" />
          </top>
          <center>
-            <ListChooser fx:id="bongauksetLista" BorderPane.alignment="CENTER" />
+            <ListChooser fx:id="bongauksetLista" prefHeight="335.0" prefWidth="161.0" BorderPane.alignment="CENTER" />
          </center>
          <bottom>
             <HBox prefWidth="200.0" BorderPane.alignment="CENTER">
                <children>
-                  <Button mnemonicParsing="false" onAction="#handleUusiBongaus" text="Uusi Bongaus">
+                  <Button fx:id="buttonUusiBongaus" mnemonicParsing="false" onAction="#handleUusiBongaus" text="Uusi Bongaus">
                      <HBox.margin>
                         <Insets right="10.0" />
                      </HBox.margin></Button>

@@ -15,15 +15,12 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.GridPane;
 import bongari.Bongattava;
-import bongari.Bongattavat;
 import bongari.Bongaus;
 import bongari.BongausTietueet;
 import bongari.ExceptionHandler;
 import bongari.Jasen;
 import bongari.Kerho;
-import fxBongari.JasenMuokkaaDialogController;
 
 /**
  * @author Jonne
@@ -43,6 +40,8 @@ public class BongariGUIController implements Initializable {
     @FXML private Button buttonMuokkaaBongaus;
     @FXML private Button buttonPoistaBongaus;
     @FXML private Button buttonPoistaJasen;
+    @FXML private Button buttonUusiBongaus;
+    @FXML private TextField haeJasenet;
 
     @Override
     public void initialize(URL url, ResourceBundle bundle) {
@@ -67,16 +66,7 @@ public class BongariGUIController implements Initializable {
      * Käsitellään jäsenen poistamiskäsky
      */
     @FXML private void handlePoistaJasen() {
-        Jasen jasenKohdalla = jasenLista.getSelectedObject();
-        if (jasenKohdalla == null) return;
-        Boolean vastaus = Dialogs.showQuestionDialog("Poista jäsen", "Haluatko varmasti poistaa valitun jäsenen?", "Kyllä", "Ei");
-        if (vastaus == true) {
-        kerho.poistaJasenenBongaukset(jasenKohdalla.getJasenId());
-        kerho.poista(jasenKohdalla);
-        paivita(0);
-        } else {
-            return;
-        }
+        poistaJasen();
     }
     
     /**
@@ -114,6 +104,21 @@ public class BongariGUIController implements Initializable {
         tallenna();
         Platform.exit();
     }
+    
+    /**
+     * Jäsenten hakuominaisuudet
+     */
+    @FXML private void handleHaeJasenet() {
+       paivita(0, haeJasenet.getText());
+    }
+    
+    /**
+     * Näyttää tietoikkunan
+     */
+    @FXML private void handleTietoja() {
+       tietoja();
+    }
+
 
     /**
      * Tarkistetaan onko tallennus tehty
@@ -135,6 +140,7 @@ public class BongariGUIController implements Initializable {
         }
     }
     
+    
   //===========================================================================================    
   // Tästä eteenpäin ei käyttöliittymään suoraan liittyvää koodia
     
@@ -151,6 +157,7 @@ public class BongariGUIController implements Initializable {
         jasenLista.clear();       
         jasenLista.addSelectionListener(e -> naytaJasen());
         bongauksetLista.clear();
+   
         List<Jasen> jasenet = kerho.etsiJasenet("");
         if (!jasenet.isEmpty()) {
             for (Jasen jasen : jasenet) {
@@ -160,6 +167,9 @@ public class BongariGUIController implements Initializable {
             jasenLista.setSelectedIndex(0);
         } else {
             jasenLista.add("Ei jäseniä", new Jasen());
+            jasenLista.setSelectedIndex(0);
+            buttonPoistaJasen.setDisable(true);
+            buttonUusiBongaus.setDisable(true);
             }                    
     }
     
@@ -174,6 +184,7 @@ public class BongariGUIController implements Initializable {
             Dialogs.showMessageDialog("Ei löytynyt kansiota nimellä: " + nimi);
             boolean onnistuiko = avaa();
             if (!onnistuiko) Platform.exit();
+            alusta();
         }
     }
     
@@ -192,7 +203,7 @@ public class BongariGUIController implements Initializable {
         if (uusiJasen == null) return;
         uusiJasen.rekisteroi();
         kerho.lisaa(uusiJasen);
-        paivita(0);
+        paivita(0, "");
     }
     
     private void naytaJasen() {
@@ -214,16 +225,31 @@ public class BongariGUIController implements Initializable {
         if (muokattuJasen == null) return;
         // Jos kaikki kunnossa, muokataan.
         kerho.muokkaa(muokattuJasen);
-        paivita(jasenLista.getSelectedIndex());
+        paivita(jasenLista.getSelectedIndex(), "");
         } catch (CloneNotSupportedException e) {
             Dialogs.showMessageDialog(e.getMessage());
         }       
     }
     
-    private void paivita(int valittu) {
+    private void poistaJasen() {
+        Jasen jasenKohdalla = jasenLista.getSelectedObject();
+        if (jasenKohdalla == null) return;
+        Boolean vastaus = Dialogs.showQuestionDialog("Poista jäsen", "Haluatko varmasti poistaa valitun jäsenen?", "Kyllä", "Ei");
+        if (vastaus == true) {
+        kerho.poistaJasenenBongaukset(jasenKohdalla.getJasenId());
+        kerho.poista(jasenKohdalla);
+        paivita(0, "");
+        } else {
+            return;
+        }
+    }
+    
+    private void paivita(int valittu, String hakuehto) {
         jasenLista.clear();
+        bongauksetLista.clear();
+        bongauksenTiedotTyhjenna();
         jasenLista.addSelectionListener(e -> naytaJasen());
-        List<Jasen> jasenet = kerho.etsiJasenet("");
+        List<Jasen> jasenet = kerho.etsiJasenet(hakuehto);
         if (!jasenet.isEmpty()) {
             buttonPoistaJasen.setDisable(false);
             for (Jasen jasen : jasenet) {
@@ -232,15 +258,25 @@ public class BongariGUIController implements Initializable {
             // Jos on jäsenistöä, valittuna on ensimmäinen.
             jasenLista.setSelectedIndex(valittu);
         } else {
+            if (hakuehto == "") {
             jasenLista.add("Ei jäseniä", new Jasen());
-            buttonPoistaJasen.setDisable(true);         
+            buttonPoistaJasen.setDisable(true);
+            buttonUusiBongaus.setDisable(true);
+                }
+            else {
+                buttonPoistaJasen.setDisable(true);
+                buttonUusiBongaus.setDisable(true);
+            }
             }
     }
     
     private void naytaJasenenBongaukset(Jasen jasen) {
         bongauksetLista.clear();
+        bongauksenTiedotTyhjenna();
         bongauksetLista.addSelectionListener(e -> naytaBongaus());
         if (jasen == null) return;
+        
+        if (jasen.getJasenId() > 0) buttonUusiBongaus.setDisable(false);
         
         List<Bongaus> bongaukset = kerho.haeJasenenBongaukset(jasen.getJasenId());
         if (!bongaukset.isEmpty()) {
@@ -249,6 +285,7 @@ public class BongariGUIController implements Initializable {
             bongauksenTiedotLisatietoja.setDisable(false);
             buttonMuokkaaBongaus.setDisable(false);
             buttonPoistaBongaus.setDisable(false);
+            buttonUusiBongaus.setDisable(false);
             for (Bongaus bongaus : bongaukset) {
                 Bongattava bongattava = kerho.etsiBongattavatId(bongaus.getBongattavaId());
                 bongauksetLista.add(bongattava.getNimi(), bongaus);
@@ -256,14 +293,13 @@ public class BongariGUIController implements Initializable {
             bongauksetLista.setSelectedIndex(0);
         } else {
             Bongaus bongaus = new Bongaus();
-            bongaus.setTietoja("tyhja");
+            bongaus.setBongausId(-1);
             bongauksetLista.add("Käyttäjällä ei ole vielä bongauksia", bongaus);
-            bongauksetLista.setSelectedIndex(0);
             bongauksenTiedotPvm.setDisable(true);
             bongauksenTiedotKaupunki.setDisable(true);
             bongauksenTiedotLisatietoja.setDisable(true);
             buttonMuokkaaBongaus.setDisable(true);
-            buttonPoistaBongaus.setDisable(true);
+            buttonPoistaBongaus.setDisable(true);           
         }
     }
     
@@ -288,7 +324,7 @@ public class BongariGUIController implements Initializable {
         uusiBongaus.setJasenId(jasenLista.getSelectedObject().getJasenId());
         uusiBongaus.rekisteroi();
         kerho.lisaa(uusiBongaus);
-        paivita(jasenLista.getSelectedIndex());
+        paivita(jasenLista.getSelectedIndex(), "");
     }
     
     private void naytaBongaus() {
@@ -314,7 +350,7 @@ public class BongariGUIController implements Initializable {
             muokattuBongaus.setPvm(bongauksenTiedotPvm.getText());
             muokattuBongaus.setTietoja(bongauksenTiedotLisatietoja.getText());
             kerho.muokkaa(muokattuBongaus);
-            paivita(jasenLista.getSelectedIndex());
+            paivita(jasenLista.getSelectedIndex(), "");
         } catch (CloneNotSupportedException e) {   
             Dialogs.showMessageDialog(e.getMessage());
         }    
@@ -326,14 +362,14 @@ public class BongariGUIController implements Initializable {
         Boolean vastaus = Dialogs.showQuestionDialog("Poista jäsen", "Haluatko varmasti poistaa valitun bongauksen?", "Kyllä", "Ei");
         if (vastaus == true) {
         kerho.poista(bongausKohdalla);
-        paivita(jasenLista.getSelectedIndex());
+        paivita(jasenLista.getSelectedIndex(), "");
         } else {
             return;
         }      
     }
     
     private void naytaBongauksenTiedot(Bongaus bongaus) {
-        if (bongaus.getTietoja() == "tyhja") {
+        if (bongaus.getBongausId() == -1) {
             bongauksenTiedotNimi.setText("");
             bongauksenTiedotTieteellinenNimi.setText("");
             bongauksenTiedotHeimo.setText("");
@@ -352,6 +388,20 @@ public class BongariGUIController implements Initializable {
         bongauksenTiedotPvm.setText(bongaus.getPvm());
         bongauksenTiedotKaupunki.setText(bongaus.getKaupunki());
         bongauksenTiedotLisatietoja.setText(bongaus.getTietoja());
+    }
+    
+    private void bongauksenTiedotTyhjenna() {
+        bongauksenTiedotNimi.clear();
+        bongauksenTiedotTieteellinenNimi.clear();
+        bongauksenTiedotHeimo.clear();
+        bongauksenTiedotLaji.clear();
+        bongauksenTiedotPvm.clear();
+        bongauksenTiedotKaupunki.clear();
+        bongauksenTiedotLisatietoja.clear();
+    }
+    
+    private void tietoja() {
+        ModalController.showModal(BongariGUIController.class.getResource("AboutView.fxml"), "Kerho", null, "");
     }
     
     private boolean onkoValidiPvm(String pvm) {

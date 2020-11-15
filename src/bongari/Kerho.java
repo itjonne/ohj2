@@ -1,6 +1,5 @@
 package bongari;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -97,8 +96,8 @@ public class Kerho {
      * @param nimi uusi nimi
      */
     public void setTiedostot(String nimi) {
-        File dir = new File(nimi);
-        dir.mkdirs();
+        //File dir = new File(nimi);
+        //dir.mkdirs();
         String hakemistonNimi = "";
         if ( !nimi.isEmpty() ) hakemistonNimi = nimi +"/";
         bongattavat.setTiedostonPerusNimi(hakemistonNimi + "linnut");
@@ -107,8 +106,16 @@ public class Kerho {
     }
     
     /**
-     * @param nimi luettavan tiedoston nimi
+     * @param nimi luettavan kansion nimi
      * @throws ExceptionHandler heitettävä exception
+     * @example
+     * <pre name="test">
+     * #THROWS ExceptionHandler
+     * 
+     * Kerho kerho = new Kerho();
+     * kerho.lueKansiosta("data/testikerh"); #THROWS ExceptionHandler
+     * kerho.lueKansiosta("data/testikerho");
+     * kerho.etsiJasenet("").size() === 1;
      */
     public void lueKansiosta(String nimi) throws ExceptionHandler {
         setTiedostot(nimi);
@@ -217,6 +224,25 @@ public class Kerho {
         return loydetytBongaukset;
     }
     
+    /**
+     * Poistaa kyseisen jäsenen kaikki bongaukset.
+     * @param jasenId Jäsenen id
+     * 
+     * @example
+     * <pre name="test">
+     * Kerho kerho = new Kerho();
+     * Jasen jasen = new Jasen();
+     * jasen.setJasenId(1);
+     * Bongaus bongaus = new Bongaus();
+     * bongaus.setJasenId(1);
+     * bongaus.setBongattavaId(1);
+     * kerho.lisaa(jasen);
+     * kerho.lisaa(bongaus);
+     * kerho.haeJasenenBongaukset(1).size() === 1;
+     * kerho.poistaJasenenBongaukset(1);
+     * kerho.haeJasenenBongaukset(1).size() === 0;
+     * </pre>
+     */
     public void poistaJasenenBongaukset(int jasenId) {
         List<Bongaus> jasenenBongaukset = haeJasenenBongaukset(jasenId);
         for (Bongaus bongaus : jasenenBongaukset) {
@@ -228,6 +254,19 @@ public class Kerho {
      * Hakee bongattavan otuksen löytäneet jäsenet.
      * @param bongattavaId bongattavan id, jonka löytäneitä jäseniä haetaan
      * @return lista jäsenistä, jotka ovat löytäneet bongattavan olion
+     * @example
+     * <pre name="test">
+     * Kerho kerho = new Kerho();
+     * Jasen jasen = new Jasen();
+     * jasen.setJasenId(1);
+     * Bongaus bongaus = new Bongaus();
+     * bongaus.setJasenId(1);
+     * bongaus.setBongattavaId(1);
+     * kerho.lisaa(jasen);
+     * kerho.lisaa(bongaus);
+     * kerho.haeBongattavanLoytaneetJasenet(1).size() === 1;
+     * kerho.haeBongattavanLoytaneetJasenet(2).size() === 0;
+     * </pre>
      */
     public List<Jasen> haeBongattavanLoytaneetJasenet(int bongattavaId) {
         List<Bongaus> loydetytBongaukset = this.bongaukset.haeBongattavanBongaukset(bongattavaId);
@@ -243,6 +282,19 @@ public class Kerho {
      * Hakee bongattavan otuksen bongaus-tapahtumat
      * @param bongattavaId bongattavan otuksen id-numero
      * @return palauttaa bongattavan otuksen bongaus-tapahtumat
+     * @example
+     * <pre name="test">
+     * Kerho kerho = new Kerho();
+     * Jasen jasen = new Jasen();
+     * jasen.setJasenId(1);
+     * Bongaus bongaus = new Bongaus();
+     * bongaus.setJasenId(1);
+     * bongaus.setBongattavaId(1);
+     * kerho.lisaa(jasen);
+     * kerho.lisaa(bongaus);
+     * kerho.haeBongattavanBongaukset(1).size() === 1;
+     * kerho.haeBongattavanBongaukset(2).size() === 0;
+     * </pre>     
      */
     public List<Bongaus> haeBongattavanBongaukset(int bongattavaId) {
         List<Bongaus> loydetytBongaukset = this.bongaukset.haeBongattavanBongaukset(bongattavaId);
@@ -298,8 +350,8 @@ public class Kerho {
     public static void main(String args[]) throws ExceptionHandler {
         Kerho kerho = new Kerho();
         try {
-            kerho.lueKansiosta("data");
-            List<Jasen> jasenet = kerho.jasenet.annaJasenet();
+            kerho.lueKansiosta("data/kerho");
+            List<Jasen> jasenet = kerho.etsiJasenet("");
             Jasen jasen = jasenet.get(0);
             kerho.poista(jasen);
             kerho.tulostaBongattavat();
