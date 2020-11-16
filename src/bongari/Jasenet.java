@@ -40,15 +40,13 @@ public class Jasenet {
      * Jasen testi5 = new Jasen();
      * Jasen testi6 = new Jasen();
      * jasenet.lisaa(testi2); jasenet.lisaa(testi3); jasenet.lisaa(testi4); jasenet.lisaa(testi5);
-     * jasenet.lisaa(testi6); #THROWS Error
+     * jasenet.lisaa(testi6);
+     * jasenet.getLkm() === 6;
      * </pre>
      */
     public void lisaa(Jasen jasen) {
         if (lkm >= alkiot.length) {
             alkiot = Arrays.copyOf(alkiot, lkm + 10);
-            alkiot[lkm] = jasen;
-            lkm++;
-            muutettu = true;
         }
         alkiot[lkm] = jasen;
         lkm++;
