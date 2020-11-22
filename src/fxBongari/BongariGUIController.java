@@ -59,7 +59,6 @@ public class BongariGUIController implements Initializable {
      */
     @FXML private void handleMuokkaajasen() {
         muokkaaJasen();
-        // ModalController.showModal(BongariGUIController.class.getResource("JasenMuokkaaDialogView.fxml"), "Muokkaa", null, new Jasen());
     }
     
     /**
@@ -174,11 +173,12 @@ public class BongariGUIController implements Initializable {
     }
     
     /**
+     * Yritetään lukea tietokanta kansiosta
      * @param nimi kansion nimi josta luetaan
      */
     public void lueKansio(String nimi) {
         try {
-            kerho.lueKansiosta("data/" + nimi);
+            kerho.lueKansiosta("data/" + nimi.trim());
             alusta();
         } catch (ExceptionHandler e) {
             Dialogs.showMessageDialog("Ei löytynyt kansiota nimellä: " + nimi);
@@ -188,19 +188,37 @@ public class BongariGUIController implements Initializable {
     }
     
     /**
+     * Avataan tietokannan kansio
      * @return true jos avaaminen onnistui, muuten false
      */
     public boolean avaa() {
-        String vastaus = Dialogs.showInputDialog("Avaa tietokannan kansio", "kerho");
-        if (vastaus != null) lueKansio(vastaus);
+        String vastaus = Dialogs.showInputDialog("Avaa tietokannan kansio", "kerho");        
+        if (vastaus != null) {
+            if (vastaus.trim().length() == 0) {
+                Dialogs.showMessageDialog("Kansion nimi ei saa olla tyhjä! Lopetetaan ohjelma.");
+                Platform.exit();
+            }
+            else if (onkoValidiKansio(vastaus) == false) {
+                Dialogs.showMessageDialog("Kansion nimessä laittomia merkkejä! Lopetetaan ohjelma.");
+                Platform.exit();
+            }
+            else lueKansio(vastaus);
+        }
         return vastaus != null ? true : false;
     }
     
+    private boolean onkoValidiKansio(String vastaus) {
+        Pattern pattern = Pattern.compile("^[^\\\\/?%*:|\"<>\\.]+$");
+        Matcher matcher = pattern.matcher(vastaus);
+        return matcher.find();
+    }
+    
     /**
+     * Alustetaan kerho uuteen kansioon
      * @param nimi kansion nimi
      * @return true jos halutaan alustaa uusi kerho, false jos ei
      */
-    public boolean alustaKansio(String nimi) {
+    private boolean alustaKansio(String nimi) {
         Boolean vastaus = Dialogs.showQuestionDialog("Kerho", "Alustetaanko kerho kansioon: " + nimi, "Kyllä", "Ei");
         if (vastaus == true) {           
                 try {
