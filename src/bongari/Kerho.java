@@ -1,5 +1,6 @@
 package bongari;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -123,6 +124,20 @@ public class Kerho {
         jasenet.lueTiedostosta();
         List<String> rivit = bongaukset.lueTiedostosta();
         bongaukset.lisaaTietorakenteeseen(rivit);
+    }
+    
+    /**
+     * Alustaa kansioon kerhon tiedot
+     * @param nimi kerhon nimi
+     * @throws ExceptionHandler jos alustaminen ei onnistunut
+     */
+    public void alustaKansio(String nimi) throws ExceptionHandler {
+        File dir = new File(nimi);
+        dir.mkdirs();
+        setTiedostot(nimi);
+        bongattavat.alusta();
+        jasenet.alusta();
+        bongaukset.alusta();
     }
      
     /**

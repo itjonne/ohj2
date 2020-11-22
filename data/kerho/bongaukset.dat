@@ -1,9 +1,10 @@
 ;Luontobongaajien kerho ry
 ;Kenttien järjestys tiedostossa on seuraava:
 ;BongausId|JasenId|BongattavaId|Pvm|Lisätietoja
-1|5|6|Jyväskylä|27/10/2020|Oli puussa
+1|5|6|Jyväskylä|27/10/20|Oli puussa
 2|5|3|safds|03/11/2020|asdfads
 3|6|7|Suomi|03/11/2020|Löytynyt tälläinen
 4|5|8|Ankkalinna|04/11/2020|
 5|5|29|Hanhivaara|02/11/2020|Oli hieno
 6|5|19|Turku|03/11/2020|
+7|6|6|sdjfökaj|11/11/2020|

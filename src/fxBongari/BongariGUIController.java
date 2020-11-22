@@ -182,9 +182,8 @@ public class BongariGUIController implements Initializable {
             alusta();
         } catch (ExceptionHandler e) {
             Dialogs.showMessageDialog("Ei löytynyt kansiota nimellä: " + nimi);
-            boolean onnistuiko = avaa();
+            boolean onnistuiko = alustaKansio(nimi);
             if (!onnistuiko) Platform.exit();
-            alusta();
         }
     }
     
@@ -197,10 +196,28 @@ public class BongariGUIController implements Initializable {
         return vastaus != null ? true : false;
     }
     
+    /**
+     * @param nimi kansion nimi
+     * @return true jos halutaan alustaa uusi kerho, false jos ei
+     */
+    public boolean alustaKansio(String nimi) {
+        Boolean vastaus = Dialogs.showQuestionDialog("Kerho", "Alustetaanko kerho kansioon: " + nimi, "Kyllä", "Ei");
+        if (vastaus == true) {           
+                try {
+                    kerho.alustaKansio("data/" + nimi);
+                } catch (ExceptionHandler e) {
+                    Dialogs.showMessageDialog(e.getMessage());
+                }
+                lueKansio(nimi);
+        }
+        return vastaus;
+    }
+    
     private void uusiJasen() {
         Jasen uusiJasen = new Jasen();
         uusiJasen = JasenLisaaDialogController.kysyJasen(null, uusiJasen);
         if (uusiJasen == null) return;
+        if (uusiJasen.getEtunimi() == "") return;
         uusiJasen.rekisteroi();
         kerho.lisaa(uusiJasen);
         paivita(0, "");
@@ -315,7 +332,7 @@ public class BongariGUIController implements Initializable {
         uusiBongausTietue = BongausLisaaDialogController.kysyBongaus(null, uusiBongausTietue);
         
         if (uusiBongausTietue == null) return;
-        
+        if (uusiBongausTietue.getBongattavaId() == 0) return;
         Bongaus uusiBongaus = new Bongaus();
         uusiBongaus.setBongattavaId(uusiBongausTietue.getBongattavaId());
         uusiBongaus.setKaupunki(uusiBongausTietue.getKaupunki());

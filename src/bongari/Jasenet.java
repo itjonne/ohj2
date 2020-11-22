@@ -322,6 +322,44 @@ public class Jasenet {
     }
     
     /**
+     * Alustaa tyhjät tiedostot
+     * @throws ExceptionHandler jos alustus ei onnistu
+     */
+    public void alusta() throws ExceptionHandler {
+        File ftied = new File(getTiedostonNimi());
+        try {
+            ftied.createNewFile();
+        } catch (IOException ex) {
+            throw new ExceptionHandler("Tiedosto " + ftied.getName() + " ei alustu");
+        }
+        try ( PrintWriter fo = new PrintWriter(new FileWriter(ftied.getCanonicalPath())) ) {
+            fo.println(";Luontobongaajien kerho ry");
+            fo.println(";Kenttien järjestys tiedostossa on seuraava:");
+            fo.println(";id|etunimi|sukunimi");
+        } catch ( FileNotFoundException ex ) {
+            throw new ExceptionHandler("Tiedosto " + ftied.getName() + " ei aukea");
+        } catch ( IOException ex ) {
+            throw new ExceptionHandler("Tiedoston " + ftied.getName() + " kirjoittamisessa ongelmia");
+        }
+        
+        File fbak = new File(getBakNimi());
+        try {
+            fbak.createNewFile();
+        } catch (IOException ex) {
+            throw new ExceptionHandler("Tiedosto " + fbak.getName() + " ei alustu");
+        }
+        try ( PrintWriter fo = new PrintWriter(new FileWriter(fbak.getCanonicalPath())) ) {
+            fo.println(";Luontobongaajien kerho ry");
+            fo.println(";Kenttien järjestys tiedostossa on seuraava:");
+            fo.println(";id|etunimi|sukunimi");
+        } catch ( FileNotFoundException ex ) {
+            throw new ExceptionHandler("Tiedosto " + fbak.getName() + " ei aukea");
+        } catch ( IOException ex ) {
+            throw new ExceptionHandler("Tiedoston " + fbak.getName() + " kirjoittamisessa ongelmia");
+        }
+    }
+    
+    /**
      * Tallentaa tiedostoon haluttuun paikkaan
      * @throws ExceptionHandler Jos joku menee rikki
      */
