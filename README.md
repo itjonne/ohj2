@@ -1,15 +1,6 @@
-# HT Vaihe 7 ?
+# Ohjelmointi 2 - Harjoitustyö
 
-Osataan lukea tiedostosta + Tallentaa.
+## Lintubongareiden kerho
 
-Osataan lisätä/muokata/poistaa jäseniä
-Osataan muokata/lisätä/poistaa bongauksia.
-
-Bongausikkuna valmis.
-
-## Bugit:
-- Korjattu kaikki löydetyt
-
-## TODO:
-
-- Ulkoasun siistiminen (Tätä voisi varmaan hioa loputtomiin).
+Ohjelma pitää kirjaa kerholaisista.
+Kerholaiset voivat bongata Suomessa esiintyviä lintuja.
